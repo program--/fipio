@@ -1,5 +1,5 @@
-#' @title Get the state abbreviation for a FIP code
-#' @param fip 2-digit or 5-digit FIP code
+#' @title Get the state abbreviation for a FIPS code
+#' @param fip 2-digit or 5-digit FIPS code
 #' @return a `character` vector
 #' @examples
 #' fipio::abbr("37")
@@ -11,7 +11,7 @@ abbr <- function(fip) {
     tmp[[2]][match(substr(fip, 1, 2), tmp[[1]])]
 }
 
-#' @title Get the state name for a FIP code
+#' @title Get the state name for a FIPS code
 #' @inheritParams abbr
 #' @return a `character` vector
 #' @examples
@@ -24,7 +24,7 @@ state <- function(fip) {
     tmp[[2]][match(substr(fip, 1, 2), tmp[[1]])]
 }
 
-#' @title Get the county name for a FIP code
+#' @title Get the county name for a FIPS code
 #' @inheritParams abbr
 #' @return a `character` vector
 #' @examples
@@ -41,7 +41,7 @@ county <- function(fip) {
 }
 
 
-#' @title Get the geometry for a FIP code
+#' @title Get the geometry for a FIPS code
 #' @inheritParams abbr
 #' @return an `sfg`/`sfc` object
 #' @examples
@@ -59,7 +59,7 @@ geometry <- function(fip) {
     }
 }
 
-#' @title Get the metadata for a FIP code
+#' @title Get the metadata for a FIPS code
 #' @inheritParams abbr
 #' @param geometry If `TRUE`, returns a geometry column (requires `sfheaders`)
 #' @return a `data.frame`

@@ -2,18 +2,18 @@
 % Please edit documentation in R/fipio.R
 \name{state}
 \alias{state}
-\title{Get the state name for a FIP code}
+\title{Get the state name for a FIPS code}
 \usage{
 state(fip)
 }
 \arguments{
-\item{fip}{2-digit or 5-digit FIP code}
+\item{fip}{2-digit or 5-digit FIPS code}
 }
 \value{
 a \code{character} vector
 }
 \description{
-Get the state name for a FIP code
+Get the state name for a FIPS code
 }
 \examples{
 fipio::state("37")

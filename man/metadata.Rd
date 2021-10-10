@@ -2,12 +2,12 @@
 % Please edit documentation in R/fipio.R
 \name{metadata}
 \alias{metadata}
-\title{Get the metadata for a FIP code}
+\title{Get the metadata for a FIPS code}
 \usage{
 metadata(fip, geometry = FALSE)
 }
 \arguments{
-\item{fip}{2-digit or 5-digit FIP code}
+\item{fip}{2-digit or 5-digit FIPS code}
 
 \item{geometry}{If \code{TRUE}, returns a geometry column (requires \code{sfheaders})}
 }
@@ -15,7 +15,7 @@ metadata(fip, geometry = FALSE)
 a \code{data.frame}
 }
 \description{
-Get the metadata for a FIP code
+Get the metadata for a FIPS code
 }
 \examples{
 fipio::metadata("37")

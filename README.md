@@ -16,7 +16,7 @@ License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.
 <!-- badges: end -->
 
 `fipio` is a **lightweight** package that makes it easy to get
-information about a US FIP code.
+information about a US FIPS code.
 
 ## Installation
 
@@ -39,8 +39,8 @@ remotes::install_github("program--/fipio")
 
 ## Usage
 
-`fipio` makes it easy to get information about a US FIP code. Let’s
-answer a few questions that might come up if you have a FIP code:
+`fipio` makes it easy to get information about a US FIPS code. Let’s
+answer a few questions that might come up if you have a FIPS code:
 
 ``` r
 fip <- "37129"
@@ -49,7 +49,7 @@ fip <- "37129"
 fipio::state(fip)
 #> [1] "North Carolina"
 
-# Alternatively, you can use the state FIP code by itself
+# Alternatively, you can use the state FIPS code by itself
 fipio::state("37")
 #> [1] "North Carolina"
 
@@ -74,7 +74,7 @@ fipio::metadata("37")
 
 ### With `sf`
 
-`fipio` also includes functions that support geometry for FIP codes.
+`fipio` also includes functions that support geometry for FIPS codes.
 This requires `sfheaders` at the very least to get an `sf`-compatible
 geometry object back.
 
@@ -99,7 +99,7 @@ fipio::metadata(fip, geometry = TRUE)
 ### Vectorized
 
 `fipio` functions are inherently vectorized, so you can use them with
-vectors of FIP codes easily:
+vectors of FIPS codes easily:
 
 ``` r
 fips <- c("37129", "44001", "48115")

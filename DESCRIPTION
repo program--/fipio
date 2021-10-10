@@ -1,5 +1,5 @@
 Package: fipio
-Title: Lightweight FIP code Information Retrieval
+Title: Lightweight Federal Information Processing System (FIPS) Code Information Retrieval
 Version: 1.0.0
 Authors@R: 
     person(given = "Justin",
@@ -7,9 +7,9 @@ Authors@R:
            role = c("aut", "cre"),
            email = "justin@justinsingh.me",
            comment = c(ORCID = "0000-0002-5233-5799"))
-Description: This package provides a lightweight suite
+Description: Provides a lightweight suite
              of functions for retrieving information
-             about 5-digit or 2-digit US FIP codes.
+             about 5-digit or 2-digit US FIPS codes.
 URL: https://fipio.justinsingh.me, https://github.com/program--/fipio
 BugReports: https://github.com/program--/fipio/issues
 License: MIT + file LICENSE

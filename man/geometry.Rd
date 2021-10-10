@@ -2,18 +2,18 @@
 % Please edit documentation in R/fipio.R
 \name{geometry}
 \alias{geometry}
-\title{Get the geometry for a FIP code}
+\title{Get the geometry for a FIPS code}
 \usage{
 geometry(fip)
 }
 \arguments{
-\item{fip}{2-digit or 5-digit FIP code}
+\item{fip}{2-digit or 5-digit FIPS code}
 }
 \value{
 an \code{sfg}/\code{sfc} object
 }
 \description{
-Get the geometry for a FIP code
+Get the geometry for a FIPS code
 }
 \examples{
 \dontrun{
