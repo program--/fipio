@@ -2,56 +2,56 @@
 #' @param fip 2-digit or 5-digit FIPS code
 #' @return a `character` vector
 #' @examples
-#' fipio::abbr("37")
-#' fipio::abbr("06001")
+#' fipio::fips_abbr("37")
+#' fipio::fips_abbr("06001")
 #'
 #' @export
-abbr <- function(fip) {
+fips_abbr <- function(fip) {
     tmp <- unique(fips_[, c(1, 4)])
     tmp[[2]][match(substr(fip, 1, 2), tmp[[1]])]
 }
 
 #' @title Get the state name for a FIPS code
-#' @inheritParams abbr
+#' @inheritParams fips_abbr
 #' @return a `character` vector
 #' @examples
-#' fipio::state("37")
-#' fipio::state("06001")
+#' fipio::fips_state("37")
+#' fipio::fips_state("06001")
 #'
 #' @export
-state <- function(fip) {
+fips_state <- function(fip) {
     tmp <- unique(fips_[, c(1, 5)])
     tmp[[2]][match(substr(fip, 1, 2), tmp[[1]])]
 }
 
 #' @title Get the county name for a FIPS code
-#' @inheritParams abbr
+#' @inheritParams fips_abbr
 #' @return a `character` vector
 #' @examples
-#' fipio::county("37129")
-#' fipio::county("06001")
+#' fipio::fips_county("37129")
+#' fipio::fips_county("06001")
 #'
 #' # 2-digit FIP codes will not work
-#' fipio::county("37")
+#' fipio::fips_county("37")
 #'
 #' @export
-county <- function(fip) {
+fips_county <- function(fip) {
     tmp <- fips_[, c(3, 6)]
     tmp[[2]][match(fip, tmp[[1]])]
 }
 
 
 #' @title Get the geometry for a FIPS code
-#' @inheritParams abbr
+#' @inheritParams fips_abbr
 #' @return an `sfg`/`sfc` object
 #' @examples
 #' \dontrun{
-#' fipio::geometry("37")
-#' fipio::geometry("06001")
+#' fipio::fips_geometry("37")
+#' fipio::fips_geometry("06001")
 #' }
 #'
 #' @export
-geometry <- function(fip) {
+fips_geometry <- function(fip) {
     if (.has_sfheaders()) {
         geo_$geometry[match(fip, geo_$fip_code)]
     } else {
@@ -60,15 +60,15 @@ geometry <- function(fip) {
 }
 
 #' @title Get the metadata for a FIPS code
-#' @inheritParams abbr
+#' @inheritParams fips_abbr
 #' @param geometry If `TRUE`, returns a geometry column (requires `sfheaders`)
 #' @return a `data.frame`
 #' @examples
-#' fipio::metadata("37")
-#' fipio::metadata("06001")
+#' fipio::fips_metadata("37")
+#' fipio::fips_metadata("06001")
 #'
 #' @export
-metadata <- function(fip, geometry = FALSE) {
+fips_metadata <- function(fip, geometry = FALSE) {
     df <- do.call(rbind, lapply(
         X = fip,
         FUN = function(f) {
@@ -89,7 +89,7 @@ metadata <- function(fip, geometry = FALSE) {
         }
     ))
 
-    if (geometry) df$geometry <- geometry(df$fip_code)
+    if (geometry) df$geometry <- fips_geometry(df$fip_code)
 
     rownames(df) <- NULL
 

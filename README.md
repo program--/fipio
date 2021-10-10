@@ -46,28 +46,28 @@ answer a few questions that might come up if you have a FIPS code:
 fip <- "37129"
 
 # What state is `37129` in?
-fipio::state(fip)
+fipio::fips_state(fip)
 #> [1] "North Carolina"
 
 # Alternatively, you can use the state FIPS code by itself
-fipio::state("37")
+fipio::fips_state("37")
 #> [1] "North Carolina"
 
 # What about the state abbreviation?
-fipio::abbr(fip)
+fipio::fips_abbr(fip)
 #> [1] "NC"
 
 # What county is `37129`?
-fipio::county(fip)
+fipio::fips_county(fip)
 #> [1] "New Hanover"
 
 # It'd be nice to have this all in a data.frame...
-fipio::metadata(fip)
+fipio::fips_metadata(fip)
 #>   state_code county_code fip_code state_abbr     state_name county_name
 #> 1         37         129    37129         NC North Carolina New Hanover
 
 # And the metadata for the state by itself...
-fipio::metadata("37")
+fipio::fips_metadata("37")
 #>   state_code state_abbr     state_name fip_code
 #> 1         37         NC North Carolina       37
 ```
@@ -80,7 +80,7 @@ geometry object back.
 
 ``` r
 # I'm doing spatial work, what's the geometry of `37129`?
-fipio::geometry(fip)
+fipio::fips_geometry(fip)
 #> Geometry set for 1 feature 
 #> Geometry type: MULTIPOLYGON
 #> Dimension:     XY
@@ -89,7 +89,7 @@ fipio::geometry(fip)
 #> MULTIPOLYGON (((-78.02992 34.33177, -77.82268 3...
 
 # What if I need it with my other metadata?
-fipio::metadata(fip, geometry = TRUE)
+fipio::fips_metadata(fip, geometry = TRUE)
 #>   state_code county_code fip_code state_abbr     state_name county_name
 #> 1         37         129    37129         NC North Carolina New Hanover
 #>                         geometry
@@ -104,22 +104,22 @@ vectors of FIPS codes easily:
 ``` r
 fips <- c("37129", "44001", "48115")
 
-fipio::state(fips)
+fipio::fips_state(fips)
 #> [1] "North Carolina" "Rhode Island"   "Texas"
 
-fipio::abbr(fips)
+fipio::fips_abbr(fips)
 #> [1] "NC" "RI" "TX"
 
-fipio::county(fips)
+fipio::fips_county(fips)
 #> [1] "New Hanover" "Bristol"     "Dawson"
 
-fipio::metadata(fips)
+fipio::fips_metadata(fips)
 #>   state_code county_code fip_code state_abbr     state_name county_name
 #> 1         37         129    37129         NC North Carolina New Hanover
 #> 2         44         001    44001         RI   Rhode Island     Bristol
 #> 3         48         115    48115         TX          Texas      Dawson
 
-fipio::geometry(fips)
+fipio::fips_geometry(fips)
 #> Geometry set for 3 features 
 #> Geometry type: MULTIPOLYGON
 #> Dimension:     XY

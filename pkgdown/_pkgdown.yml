@@ -10,8 +10,8 @@ template:
   
 reference:
   - contents:
-    - abbr
-    - state
-    - county
-    - geometry
-    - metadata
+    - fips_abbr
+    - fips_state
+    - fips_county
+    - fips_geometry
+    - fips_metadata

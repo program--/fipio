@@ -51,22 +51,22 @@ Let's answer a few questions that might come up if you have a FIPS code:
 fip <- "37129"
 
 # What state is `37129` in?
-fipio::state(fip)
+fipio::fips_state(fip)
 
 # Alternatively, you can use the state FIPS code by itself
-fipio::state("37")
+fipio::fips_state("37")
 
 # What about the state abbreviation?
-fipio::abbr(fip)
+fipio::fips_abbr(fip)
 
 # What county is `37129`?
-fipio::county(fip)
+fipio::fips_county(fip)
 
 # It'd be nice to have this all in a data.frame...
-fipio::metadata(fip)
+fipio::fips_metadata(fip)
 
 # And the metadata for the state by itself...
-fipio::metadata("37")
+fipio::fips_metadata("37")
 ```
 
 ### With `sf`
@@ -79,10 +79,10 @@ library(sf, quietly = TRUE)
 
 ```{r}
 # I'm doing spatial work, what's the geometry of `37129`?
-fipio::geometry(fip)
+fipio::fips_geometry(fip)
 
 # What if I need it with my other metadata?
-fipio::metadata(fip, geometry = TRUE)
+fipio::fips_metadata(fip, geometry = TRUE)
 ```
 
 ### Vectorized
@@ -90,13 +90,13 @@ fipio::metadata(fip, geometry = TRUE)
 ```{r}
 fips <- c("37129", "44001", "48115")
 
-fipio::state(fips)
+fipio::fips_state(fips)
 
-fipio::abbr(fips)
+fipio::fips_abbr(fips)
 
-fipio::county(fips)
+fipio::fips_county(fips)
 
-fipio::metadata(fips)
+fipio::fips_metadata(fips)
 
-fipio::geometry(fips)
+fipio::fips_geometry(fips)
 ```

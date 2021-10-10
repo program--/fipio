@@ -33,19 +33,19 @@ local_fipio <- function(fip_code, state_abbr, state_name, county_name) {
 }
 
 expect_abbr <- function(fip, expected) {
-    testthat::expect_equal(abbr(fip), expected)
+    testthat::expect_equal(fipio::fips_abbr(fip), expected)
 }
 
 expect_state <- function(fip, expected) {
-    testthat::expect_equal(state(fip), expected)
+    testthat::expect_equal(fipio::fips_state(fip), expected)
 }
 
 expect_county <- function(fip, expected) {
-    testthat::expect_equal(county(fip), expected)
+    testthat::expect_equal(fipio::fips_county(fip), expected)
 }
 
 expect_metadata <- function(fip, expected) {
-    meta <- metadata(fip)
+    meta <- fipio::fips_metadata(fip)
 
     testthat::expect_s3_class(meta, "data.frame")
 
@@ -69,8 +69,8 @@ expect_metadata <- function(fip, expected) {
 
 expect_geometry_class <- function(fip) {
     expect_success({
-        geom      <- geometry(fip)
-        geom_meta <- metadata(fip, geometry = TRUE)
+        geom      <- fipio::fips_geometry(fip)
+        geom_meta <- fipio::fips_metadata(fip, geometry = TRUE)
 
         sf_class <- c("sfg", "sfc", "sf")
         tests <- unlist(

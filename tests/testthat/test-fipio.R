@@ -30,6 +30,6 @@ invisible(mapply(
 
 # Test error
 testthat::test_that("fipio returns an error if `sfheaders` is not installed", {
-    mockery::stub(geometry, ".has_sfheaders", FALSE)
-    testthat::expect_error(geometry(NA))
+    mockery::stub(fips_geometry, ".has_sfheaders", FALSE)
+    testthat::expect_error(fips_geometry(NA))
 })
