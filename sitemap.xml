@@ -4,18 +4,18 @@
     <loc>https://fipio.justinsingh.me/index.html</loc>
   </url>
   <url>
-    <loc>https://fipio.justinsingh.me/reference/abbr.html</loc>
+    <loc>https://fipio.justinsingh.me/reference/fips_abbr.html</loc>
   </url>
   <url>
-    <loc>https://fipio.justinsingh.me/reference/county.html</loc>
+    <loc>https://fipio.justinsingh.me/reference/fips_county.html</loc>
   </url>
   <url>
-    <loc>https://fipio.justinsingh.me/reference/geometry.html</loc>
+    <loc>https://fipio.justinsingh.me/reference/fips_geometry.html</loc>
   </url>
   <url>
-    <loc>https://fipio.justinsingh.me/reference/metadata.html</loc>
+    <loc>https://fipio.justinsingh.me/reference/fips_metadata.html</loc>
   </url>
   <url>
-    <loc>https://fipio.justinsingh.me/reference/state.html</loc>
+    <loc>https://fipio.justinsingh.me/reference/fips_state.html</loc>
   </url>
 </urlset>

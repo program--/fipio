@@ -97,28 +97,28 @@
 <code class="sourceCode R"><span class="va">fip</span> <span class="op">&lt;-</span> <span class="st">"37129"</span>
 
 <span class="co"># What state is `37129` in?</span>
-<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/state.html">state</a></span><span class="op">(</span><span class="va">fip</span><span class="op">)</span>
+<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/fips_state.html">fips_state</a></span><span class="op">(</span><span class="va">fip</span><span class="op">)</span>
 <span class="co">#&gt; [1] "North Carolina"</span>
 
 <span class="co"># Alternatively, you can use the state FIPS code by itself</span>
-<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/state.html">state</a></span><span class="op">(</span><span class="st">"37"</span><span class="op">)</span>
+<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/fips_state.html">fips_state</a></span><span class="op">(</span><span class="st">"37"</span><span class="op">)</span>
 <span class="co">#&gt; [1] "North Carolina"</span>
 
 <span class="co"># What about the state abbreviation?</span>
-<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/abbr.html">abbr</a></span><span class="op">(</span><span class="va">fip</span><span class="op">)</span>
+<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/fips_abbr.html">fips_abbr</a></span><span class="op">(</span><span class="va">fip</span><span class="op">)</span>
 <span class="co">#&gt; [1] "NC"</span>
 
 <span class="co"># What county is `37129`?</span>
-<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/county.html">county</a></span><span class="op">(</span><span class="va">fip</span><span class="op">)</span>
+<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/fips_county.html">fips_county</a></span><span class="op">(</span><span class="va">fip</span><span class="op">)</span>
 <span class="co">#&gt; [1] "New Hanover"</span>
 
 <span class="co"># It'd be nice to have this all in a data.frame...</span>
-<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/metadata.html">metadata</a></span><span class="op">(</span><span class="va">fip</span><span class="op">)</span>
+<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/fips_metadata.html">fips_metadata</a></span><span class="op">(</span><span class="va">fip</span><span class="op">)</span>
 <span class="co">#&gt;   state_code county_code fip_code state_abbr     state_name county_name</span>
 <span class="co">#&gt; 1         37         129    37129         NC North Carolina New Hanover</span>
 
 <span class="co"># And the metadata for the state by itself...</span>
-<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/metadata.html">metadata</a></span><span class="op">(</span><span class="st">"37"</span><span class="op">)</span>
+<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/fips_metadata.html">fips_metadata</a></span><span class="op">(</span><span class="st">"37"</span><span class="op">)</span>
 <span class="co">#&gt;   state_code state_abbr     state_name fip_code</span>
 <span class="co">#&gt; 1         37         NC North Carolina       37</span></code></pre></div>
 <div id="with-sf" class="section level3">
@@ -128,7 +128,7 @@
 <p><code>fipio</code> also includes functions that support geometry for FIPS codes. This requires <code>sfheaders</code> at the very least to get an <code>sf</code>-compatible geometry object back.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># I'm doing spatial work, what's the geometry of `37129`?</span>
-<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/geometry.html">geometry</a></span><span class="op">(</span><span class="va">fip</span><span class="op">)</span>
+<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/fips_geometry.html">fips_geometry</a></span><span class="op">(</span><span class="va">fip</span><span class="op">)</span>
 <span class="co">#&gt; Geometry set for 1 feature </span>
 <span class="co">#&gt; Geometry type: MULTIPOLYGON</span>
 <span class="co">#&gt; Dimension:     XY</span>
@@ -137,7 +137,7 @@
 <span class="co">#&gt; MULTIPOLYGON (((-78.02992 34.33177, -77.82268 3...</span>
 
 <span class="co"># What if I need it with my other metadata?</span>
-<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/metadata.html">metadata</a></span><span class="op">(</span><span class="va">fip</span>, geometry <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/fips_metadata.html">fips_metadata</a></span><span class="op">(</span><span class="va">fip</span>, geometry <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt;   state_code county_code fip_code state_abbr     state_name county_name</span>
 <span class="co">#&gt; 1         37         129    37129         NC North Carolina New Hanover</span>
 <span class="co">#&gt;                         geometry</span>
@@ -150,22 +150,22 @@
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fips</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"37129"</span>, <span class="st">"44001"</span>, <span class="st">"48115"</span><span class="op">)</span>
 
-<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/state.html">state</a></span><span class="op">(</span><span class="va">fips</span><span class="op">)</span>
+<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/fips_state.html">fips_state</a></span><span class="op">(</span><span class="va">fips</span><span class="op">)</span>
 <span class="co">#&gt; [1] "North Carolina" "Rhode Island"   "Texas"</span>
 
-<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/abbr.html">abbr</a></span><span class="op">(</span><span class="va">fips</span><span class="op">)</span>
+<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/fips_abbr.html">fips_abbr</a></span><span class="op">(</span><span class="va">fips</span><span class="op">)</span>
 <span class="co">#&gt; [1] "NC" "RI" "TX"</span>
 
-<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/county.html">county</a></span><span class="op">(</span><span class="va">fips</span><span class="op">)</span>
+<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/fips_county.html">fips_county</a></span><span class="op">(</span><span class="va">fips</span><span class="op">)</span>
 <span class="co">#&gt; [1] "New Hanover" "Bristol"     "Dawson"</span>
 
-<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/metadata.html">metadata</a></span><span class="op">(</span><span class="va">fips</span><span class="op">)</span>
+<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/fips_metadata.html">fips_metadata</a></span><span class="op">(</span><span class="va">fips</span><span class="op">)</span>
 <span class="co">#&gt;   state_code county_code fip_code state_abbr     state_name county_name</span>
 <span class="co">#&gt; 1         37         129    37129         NC North Carolina New Hanover</span>
 <span class="co">#&gt; 2         44         001    44001         RI   Rhode Island     Bristol</span>
 <span class="co">#&gt; 3         48         115    48115         TX          Texas      Dawson</span>
 
-<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/geometry.html">geometry</a></span><span class="op">(</span><span class="va">fips</span><span class="op">)</span>
+<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/fips_geometry.html">fips_geometry</a></span><span class="op">(</span><span class="va">fips</span><span class="op">)</span>
 <span class="co">#&gt; Geometry set for 3 features </span>
 <span class="co">#&gt; Geometry type: MULTIPOLYGON</span>
 <span class="co">#&gt; Dimension:     XY</span>

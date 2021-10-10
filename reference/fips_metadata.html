@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • fipio</title>
+<title>Get the metadata for a FIPS code — fips_metadata • fipio</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="Get the metadata for a FIPS code — fips_metadata" />
+<meta property="og:description" content="Get the metadata for a FIPS code" />
 
 
 
@@ -58,7 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -110,39 +111,47 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/program--/fipio/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>Get the metadata for a FIPS code</h1>
+    <small class="dont-index">Source: <a href='https://github.com/program--/fipio/blob/master/R/fipio.R'><code>R/fipio.R</code></a></small>
+    <div class="hidden name"><code>fips_metadata.Rd</code></div>
     </div>
 
-    <div id="fipio-100" class="section level1">
-<h1 class="page-header" data-toc-text="1.0.0">
-<a href="#fipio-100" class="anchor"></a>fipio 1.0.0</h1>
-<ul>
-<li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
-<li>Initial commit to version control with the following functions:
-<ul>
-<li>
-<code><a href="../reference/fips_abbr.html">fips_abbr()</a></code> - Gets state abbreviation.</li>
-<li>
-<code><a href="../reference/fips_state.html">fips_state()</a></code> - Gets state name.</li>
-<li>
-<code><a href="../reference/fips_county.html">fips_county()</a></code> - Gets county name.</li>
-<li>
-<code><a href="../reference/fips_geometry.html">fips_geometry()</a></code> - Gets geometry.</li>
-<li>
-<code><a href="../reference/fips_metadata.html">fips_metadata()</a></code> - Gets the information above as a <code>data.frame</code>.</li>
-</ul>
-</li>
-</ul>
-</div>
-  </div>
+    <div class="ref-description">
+    <p>Get the metadata for a FIPS code</p>
+    </div>
 
+    <pre class="usage"><span class='fu'>fips_metadata</span><span class='op'>(</span><span class='va'>fip</span>, geometry <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>fip</th>
+      <td><p>2-digit or 5-digit FIPS code</p></td>
+    </tr>
+    <tr>
+      <th>geometry</th>
+      <td><p>If <code>TRUE</code>, returns a geometry column (requires <code>sfheaders</code>)</p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a <code>data.frame</code></p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'>fipio</span><span class='fu'>::</span><span class='fu'>fips_metadata</span><span class='op'>(</span><span class='st'>"37"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   state_code state_abbr     state_name fip_code
+#&gt; 1         37         NC North Carolina       37</div><div class='input'><span class='fu'>fipio</span><span class='fu'>::</span><span class='fu'>fips_metadata</span><span class='op'>(</span><span class='st'>"06001"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;   state_code county_code fip_code state_abbr state_name county_name
+#&gt; 1         06         001    06001         CA California     Alameda</div><div class='input'>
+</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
-
 </div>
 
 
