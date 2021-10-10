@@ -1,0 +1,17 @@
+home:
+  title: fipio
+  description: A lightweight utility for FIP code information retrieval
+
+url: https://fipio.justinsingh.me
+
+template:
+  params:
+    bootswatch: paper
+  
+reference:
+  - contents:
+    - abbr
+    - state
+    - county
+    - geometry
+    - metadata
