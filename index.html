@@ -74,7 +74,7 @@
 <a href="#fipio" class="anchor"></a>fipio</h1></div>
 <!-- badges: start -->
 
-<p><code>fipio</code> is a <strong>lightweight</strong> package that makes it easy to get information about a US FIP code.</p>
+<p><code>fipio</code> is a <strong>lightweight</strong> package that makes it easy to get information about a US FIPS code.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -92,7 +92,7 @@
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h2>
-<p><code>fipio</code> makes it easy to get information about a US FIP code. Let’s answer a few questions that might come up if you have a FIP code:</p>
+<p><code>fipio</code> makes it easy to get information about a US FIPS code. Let’s answer a few questions that might come up if you have a FIPS code:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fip</span> <span class="op">&lt;-</span> <span class="st">"37129"</span>
 
@@ -100,7 +100,7 @@
 <span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/state.html">state</a></span><span class="op">(</span><span class="va">fip</span><span class="op">)</span>
 <span class="co">#&gt; [1] "North Carolina"</span>
 
-<span class="co"># Alternatively, you can use the state FIP code by itself</span>
+<span class="co"># Alternatively, you can use the state FIPS code by itself</span>
 <span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/state.html">state</a></span><span class="op">(</span><span class="st">"37"</span><span class="op">)</span>
 <span class="co">#&gt; [1] "North Carolina"</span>
 
@@ -125,7 +125,7 @@
 <h3 class="hasAnchor">
 <a href="#with-sf" class="anchor"></a>With <code>sf</code>
 </h3>
-<p><code>fipio</code> also includes functions that support geometry for FIP codes. This requires <code>sfheaders</code> at the very least to get an <code>sf</code>-compatible geometry object back.</p>
+<p><code>fipio</code> also includes functions that support geometry for FIPS codes. This requires <code>sfheaders</code> at the very least to get an <code>sf</code>-compatible geometry object back.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># I'm doing spatial work, what's the geometry of `37129`?</span>
 <span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/geometry.html">geometry</a></span><span class="op">(</span><span class="va">fip</span><span class="op">)</span>
@@ -146,7 +146,7 @@
 <div id="vectorized" class="section level3">
 <h3 class="hasAnchor">
 <a href="#vectorized" class="anchor"></a>Vectorized</h3>
-<p><code>fipio</code> functions are inherently vectorized, so you can use them with vectors of FIP codes easily:</p>
+<p><code>fipio</code> functions are inherently vectorized, so you can use them with vectors of FIPS codes easily:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fips</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"37129"</span>, <span class="st">"44001"</span>, <span class="st">"48115"</span><span class="op">)</span>
 
