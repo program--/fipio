@@ -28,8 +28,45 @@ invisible(mapply(
     county_name = county_names
 ))
 
+testthat::test_that("as_fips edge cases", {
+    expect_fips("CA", NULL, "06")
+    expect_fips("california", NULL, "06")
+
+    expect_fips(c("CA", "NC"),
+                c("Stanislaus"),
+                c("06099", "37"))
+
+    expect_fips(c("CA", "NC", "RI"),
+                c("Stanislaus", NA, "Bristol"),
+                c("06099", "37", "44001"))
+
+    expect_fips(c("CA", "NC", "RI"),
+                c(NA, "New Hanover", "Bristol"),
+                c("06", "37129", "44001"))
+
+    expect_fips(c("CA", "NC", "RI"),
+                c(NA, "New Hanover", NA),
+                c("06", "37129", "44"))
+
+    expect_fips("CA", "fakecounty", as.character(NA))
+
+    testthat::expect_error(fipio::as_fips())
+    testthat::expect_error(fipio::as_fips(""))
+    testthat::expect_error(fipio::as_fips(NULL))
+})
+
 # Test error
 testthat::test_that("fipio returns an error if `sfheaders` is not installed", {
     mockery::stub(fips_geometry, ".has_sfheaders", FALSE)
     testthat::expect_error(fips_geometry(NA))
+})
+
+# Test matching function
+# Coverage for matchfn(), .has_fastmatch(), .onLoad()
+testthat::test_that("`fmatch` is assigned to `match` if it is installed", {
+    m <- mockery::mock(FALSE, TRUE)
+    mockery::stub(expect_match_assignment, ".has_fastmatch", m)
+
+    expect_match_assignment("base")
+    expect_match_assignment("fastmatch")
 })

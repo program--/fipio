@@ -1,3 +1,9 @@
+# fipio 1.0.0.9000
+
+* Added the function `as_fips()`, which provides a reverse lookup utility for FIPS codes.
+* Added `fastmatch` to `Suggests`. If `fastmatch` is installed, all `fipio` functions utilizing `base::match` will instead use `fastmatch::fmatch`.
+    - *Note:* this addition includes the function `fipio::using_fastmatch()` for debugging purposes, and test coverage for `.has_fastmatch()`, `using_fastmatch()`, and `.onLoad()` are *essentially* covered by the unit test containing the function calls to `expect_match_assignment()`.
+
 # fipio 1.0.0
 
 * Added a `NEWS.md` file to track changes to the package.

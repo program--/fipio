@@ -6,10 +6,12 @@ local_fipio <- function(fip_code, state_abbr, state_name, county_name) {
 
     descs <- if (multi_test) {
         c("fipio functions return correct information for multiple fips",
-          "fipio geometry returns correct information for multiple fips")
+          "fipio geometry returns correct information for multiple fips",
+          "fipio as_fips returns correct information for multiple descriptions")
     } else {
         c(paste("fipio functions return correct information for fip", fip_code),
-          paste("fipio geometry returns correct information for fip", fip_code))
+          paste("fipio geometry returns correct information for fip", fip_code),
+          "fipio as_fips returns correct information for a given description")
     }
 
     testthat::test_that(descs[1], {
@@ -29,6 +31,15 @@ local_fipio <- function(fip_code, state_abbr, state_name, county_name) {
         )
 
         expect_geometry_class(fip_code)
+    })
+
+    testthat::test_that(descs[3], {
+        expect_fips(state_name, county_name, fip_code)
+        expect_fips(state_abbr, county_name, fip_code)
+        expect_fips(toupper(state_name), county_name, fip_code)
+        expect_fips(toupper(state_abbr), county_name, fip_code)
+        expect_fips(tolower(state_name), county_name, fip_code)
+        expect_fips(tolower(state_abbr), county_name, fip_code)
     })
 }
 
@@ -93,4 +104,22 @@ expect_geometry_class <- function(fip) {
             )
         }
     })
+}
+
+expect_fips <- function(state, county, expected) {
+    if (missing(county)) county <- NULL
+    testthat::expect_equal(
+        fipio::as_fips(state = state, county = county),
+        expected
+    )
+}
+
+expect_match_assignment <- function(expected) {
+    temp_env <- testthat::test_env("fipio")
+    assign("match",
+           if (.has_fastmatch()) fastmatch::fmatch else base::match,
+           pos = temp_env)
+    fname <- getNamespaceName(environment(get("match", pos = temp_env)))[[1]]
+    testthat::expect_equal(fname, expected)
+    rm(temp_env)
 }

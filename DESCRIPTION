@@ -1,6 +1,6 @@
 Package: fipio
 Title: Lightweight Federal Information Processing System (FIPS) Code Information Retrieval
-Version: 1.0.0
+Version: 1.0.0.9000
 Authors@R: 
     person(given = "Justin",
            family = "Singh-Mohudpur",
@@ -21,6 +21,7 @@ Depends:
 Suggests: 
     testthat (>= 3.0.0),
     mockery (>= 0.4.2),
+    covr,
     sfheaders,
-    covr
+    fastmatch
 Config/testthat/edition: 3
