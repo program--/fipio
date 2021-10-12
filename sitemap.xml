@@ -4,6 +4,9 @@
     <loc>https://fipio.justinsingh.me/index.html</loc>
   </url>
   <url>
+    <loc>https://fipio.justinsingh.me/reference/as_fips.html</loc>
+  </url>
+  <url>
     <loc>https://fipio.justinsingh.me/reference/fips_abbr.html</loc>
   </url>
   <url>
@@ -17,5 +20,8 @@
   </url>
   <url>
     <loc>https://fipio.justinsingh.me/reference/fips_state.html</loc>
+  </url>
+  <url>
+    <loc>https://fipio.justinsingh.me/reference/using_fastmatch.html</loc>
   </url>
 </urlset>

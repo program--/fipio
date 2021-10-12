@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fipio</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0.9000</span>
       </span>
     </div>
 
@@ -114,6 +114,20 @@
       <small>Source: <a href='https://github.com/program--/fipio/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="fipio-1009000" class="section level1">
+<h1 class="page-header" data-toc-text="1.0.0.9000">
+<a href="#fipio-1009000" class="anchor"></a>fipio 1.0.0.9000<small> Unreleased </small>
+</h1>
+<ul>
+<li>Added the function <code><a href="../reference/as_fips.html">as_fips()</a></code>, which provides a reverse lookup utility for FIPS codes.</li>
+<li>Added <code>fastmatch</code> to <code>Suggests</code>. If <code>fastmatch</code> is installed, all <code>fipio</code> functions utilizing <code><a href="https://rdrr.io/r/base/match.html">base::match</a></code> will instead use <code><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">fastmatch::fmatch</a></code>.
+<ul>
+<li>
+<em>Note:</em> this addition includes the function <code><a href="../reference/using_fastmatch.html">fipio::using_fastmatch()</a></code> for debugging purposes, and test coverage for <code>.has_fastmatch()</code>, <code><a href="../reference/using_fastmatch.html">using_fastmatch()</a></code>, and <code><a href="https://rdrr.io/r/base/ns-hooks.html">.onLoad()</a></code> are <em>essentially</em> covered by the unit test containing the function calls to <code>expect_match_assignment()</code>.</li>
+</ul>
+</li>
+</ul>
+</div>
     <div id="fipio-100" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.0">
 <a href="#fipio-100" class="anchor"></a>fipio 1.0.0<small> 2021-10-11 </small>
