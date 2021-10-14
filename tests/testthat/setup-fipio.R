@@ -1,3 +1,9 @@
+geolocate_data <- readRDS(system.file(
+    "testdata",
+    "testdata.rds",
+    package = "fipio")
+)
+
 local_fipio <- function(fip_code, state_abbr, state_name, county_name) {
 
     multi_test <- if (length(fip_code) > 1) TRUE else FALSE

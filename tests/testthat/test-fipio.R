@@ -70,3 +70,93 @@ testthat::test_that("`fmatch` is assigned to `match` if it is installed", {
     expect_match_assignment("base")
     expect_match_assignment("fastmatch")
 })
+
+# Test geolocation function
+testthat::test_that("fipio geolocates on `base` classes", {
+    indices <- sample(seq_len(nrow(geolocate_data)), 10)
+
+    # Single Numeric
+    testthat::expect_identical(
+        fipio::coords_to_fips(
+            x = geolocate_data$X[indices[1]],
+            y = geolocate_data$Y[indices[1]]
+        ),
+        geolocate_data$FIPS[indices[1]]
+    )
+
+    # Single Character
+    testthat::expect_identical(
+        fipio::coords_to_fips(
+            x = as.character(geolocate_data$X[indices[1]]),
+            y = as.character(geolocate_data$Y[indices[1]])
+        ),
+        geolocate_data$FIPS[indices[1]]
+    )
+
+    # Vectorized Numeric
+    testthat::expect_identical(
+        fipio::coords_to_fips(
+            x = geolocate_data$X[indices],
+            y = geolocate_data$Y[indices]
+        ),
+        geolocate_data$FIPS[indices]
+    )
+
+    # Vectorized Character
+    testthat::expect_identical(
+        fipio::coords_to_fips(
+            x = as.character(geolocate_data$X[indices]),
+            y = as.character(geolocate_data$Y[indices])
+        ),
+        geolocate_data$FIPS[indices]
+    )
+
+    # data.frame
+    testthat::expect_identical(
+        fipio::coords_to_fips(
+            x = as.data.frame(geolocate_data[indices, 2:3]),
+            coords = c("X", "Y")
+        ),
+        geolocate_data$FIPS[indices]
+    )
+
+    # matrix
+    testthat::expect_identical(
+        fipio::coords_to_fips(
+            matrix(
+                data = c(
+                    geolocate_data$X[indices],
+                    geolocate_data$Y[indices]
+                ),
+                ncol = 2, nrow = 10
+            )
+        ),
+        geolocate_data$FIPS[indices]
+    )
+})
+
+testthat::test_that("fipio geolocates on `sf` classes", {
+    testthat::skip_if_not_installed("sf")
+    testthat::skip_if_not_installed("sfheaders")
+    testthat::skip_on_cran()
+
+    indices <- sample(seq_len(nrow(geolocate_data)), 10)
+
+    # sf
+    testthat::expect_identical(
+        fipio::coords_to_fips(geolocate_data[indices, ]),
+        geolocate_data$FIPS[indices]
+    )
+
+    # sfc
+    testthat::expect_identical(
+        fipio::coords_to_fips(geolocate_data[indices, ]$geometry),
+        geolocate_data$FIPS[indices]
+    )
+
+    # sfg
+    testthat::expect_identical(
+        fipio::coords_to_fips(geolocate_data[indices[1], ]$geometry),
+        geolocate_data$FIPS[indices[1]]
+    )
+})

@@ -129,3 +129,50 @@ fipio::fips_geometry(fips)
 #> MULTIPOLYGON (((-71.36521 41.73565, -71.3174 41...
 #> MULTIPOLYGON (((-102.2085 32.95896, -102.0762 3...
 ```
+
+### Reverse Geolocate Coordinates to FIPS (`fipio` \>= 1.0.0.9000)
+
+`fipio` contains the ability to locate the FIPS code(s) for a set of
+coordinates (in `WGS84`/`EPSG: 4326`):
+
+``` r
+# With a single set of coordinates
+fipio::coords_to_fips(x = -119.8696, y = 34.4184)
+#> [1] "06083"
+
+# Vectorized
+fipio::coords_to_fips(
+    x = c(-81.4980534549709, -81.1249425046948),
+    y = c(36.4314781444978, 36.4911893240597)
+)
+#> [1] "37009" "37005"
+
+# With a `data.frame` or `matrix`
+fipio::coords_to_fips(
+    x = data.frame(
+        X = c(-81.4980534549709, -81.1249425046948),
+        Y = c(36.4314781444978, 36.4911893240597)
+    ),
+    coords = c("X", "Y")
+)
+#> [1] "37009" "37005"
+
+# With an `sfg` object
+fipio::coords_to_fips(
+    x   = sf::st_point(c(-81.4980534549709,
+                         36.4314781444978)),
+    dim = "XY"
+)
+#> [1] "37009"
+
+# With an `sf` object
+fipio::coords_to_fips(
+    x = sf::st_as_sf(
+        data.frame(X = c(-81.4980534549709, -81.1249425046948),
+                   Y = c(36.4314781444978, 36.4911893240597)),
+        coords = c("X", "Y"),
+        crs = 4326
+    )
+)
+#> [1] "37009" "37005"
+```
