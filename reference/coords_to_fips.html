@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • fipio</title>
+<title>Associate a set of coordinates to FIPS codes — coords_to_fips • fipio</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="Associate a set of coordinates to FIPS codes — coords_to_fips" />
+<meta property="og:description" content="Associate a set of coordinates to FIPS codes" />
 
 
 
@@ -58,7 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -110,56 +111,74 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/program--/fipio/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>Associate a set of coordinates to FIPS codes</h1>
+    <small class="dont-index">Source: <a href='https://github.com/program--/fipio/blob/master/R/geolocate.R'><code>R/geolocate.R</code></a></small>
+    <div class="hidden name"><code>coords_to_fips.Rd</code></div>
     </div>
 
-    <div id="fipio-1009000" class="section level1">
-<h1 class="page-header" data-toc-text="1.0.0.9000">
-<a href="#fipio-1009000" class="anchor"></a>fipio 1.0.0.9000<small> Unreleased </small>
-</h1>
-<ul>
-<li><strong><code>fipio</code> now depends on R &gt;= 3.5.0 due to using <code>.rds</code> and version 3 <code>.rda</code> files.</strong></li>
-<li>Added the function <code><a href="../reference/coords_to_fips.html">coords_to_fips()</a></code>, which provides coordinates to FIPS code utility. This is implemented without <code>sf</code> using a simple ray casting algorithm for intersections. Based on a few benchmarks, <code><a href="../reference/coords_to_fips.html">coords_to_fips()</a></code> performs approximately the same as using <code>sf::st_intersects()</code> against the geometry table, but is most likely slower in the case of having a <em>large</em> amount of points.</li>
-<li>Added the function <code><a href="../reference/as_fips.html">as_fips()</a></code>, which provides a reverse lookup utility for FIPS codes.</li>
-<li>Added <code>fastmatch</code> to <code>Suggests</code>. If <code>fastmatch</code> is installed, all <code>fipio</code> functions utilizing <code><a href="https://rdrr.io/r/base/match.html">base::match</a></code> will instead use <code><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">fastmatch::fmatch</a></code>.
-<ul>
-<li>
-<em>Note:</em> this addition includes the function <code><a href="../reference/using_fastmatch.html">fipio::using_fastmatch()</a></code> for debugging purposes, and test coverage for <code>.has_fastmatch()</code>, <code><a href="../reference/using_fastmatch.html">using_fastmatch()</a></code>, and <code><a href="https://rdrr.io/r/base/ns-hooks.html">.onLoad()</a></code> are <em>essentially</em> covered by the unit test containing the function calls to <code>expect_match_assignment()</code>.</li>
-</ul>
-</li>
-</ul>
-</div>
-    <div id="fipio-100" class="section level1">
-<h1 class="page-header" data-toc-text="1.0.0">
-<a href="#fipio-100" class="anchor"></a>fipio 1.0.0<small> 2021-10-11 </small>
-</h1>
-<ul>
-<li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
-<li>Initial commit to version control with the following functions:
-<ul>
-<li>
-<code><a href="../reference/fips_abbr.html">fips_abbr()</a></code> - Gets state abbreviation.</li>
-<li>
-<code><a href="../reference/fips_state.html">fips_state()</a></code> - Gets state name.</li>
-<li>
-<code><a href="../reference/fips_county.html">fips_county()</a></code> - Gets county name.</li>
-<li>
-<code><a href="../reference/fips_geometry.html">fips_geometry()</a></code> - Gets geometry.</li>
-<li>
-<code><a href="../reference/fips_metadata.html">fips_metadata()</a></code> - Gets the information above as a <code>data.frame</code>.</li>
-</ul>
-</li>
-</ul>
-</div>
-  </div>
+    <div class="ref-description">
+    <p>Associate a set of coordinates to FIPS codes</p>
+    </div>
 
+    <pre class="usage"><span class='fu'>coords_to_fips</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for sf</span>
+<span class='fu'>coords_to_fips</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for sfc</span>
+<span class='fu'>coords_to_fips</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for sfg</span>
+<span class='fu'>coords_to_fips</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for data.frame</span>
+<span class='fu'>coords_to_fips</span><span class='op'>(</span><span class='va'>x</span>, coords <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for matrix</span>
+<span class='fu'>coords_to_fips</span><span class='op'>(</span><span class='va'>x</span>, coords <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for character</span>
+<span class='fu'>coords_to_fips</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>...</span><span class='op'>)</span>
+
+<span class='co'># S3 method for numeric</span>
+<span class='fu'>coords_to_fips</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>y</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>x</th>
+      <td><p><code>data.frame</code>, <code>matrix</code>, <code>sf</code>/<code>sfc</code>/<code>sfg</code> object,
+or longitude in <em>EPSG:4326</em></p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Named arguments passed on to methods</p></td>
+    </tr>
+    <tr>
+      <th>coords</th>
+      <td><p>Coordinates columns if <code>x</code> is a <code>data.frame</code> or <code>matrix</code>.</p></td>
+    </tr>
+    <tr>
+      <th>y</th>
+      <td><p>Latitude in <em>EPSG:4326</em></p></td>
+    </tr>
+    </table>
+
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a <code>character</code> vector of FIPS codes</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># Some coordinates at UC Santa Barbara</span>
+<span class='fu'>coords_to_fips</span><span class='op'>(</span>x <span class='op'>=</span> <span class='op'>-</span><span class='fl'>119.8696</span>, y <span class='op'>=</span> <span class='fl'>34.4184</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "06083"</div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
-
 </div>
 
 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Changelog • fipio</title>
+<title>Check if a point intersects with a side of a polygon — .segment_intersect • fipio</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,8 @@
 
 
 
-<meta property="og:title" content="Changelog" />
+<meta property="og:title" content="Check if a point intersects with a side of a polygon — .segment_intersect" />
+<meta property="og:description" content="Check if a point intersects with a side of a polygon" />
 
 
 
@@ -58,7 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-news">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -110,56 +111,25 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1 data-toc-skip>Changelog <small></small></h1>
-      <small>Source: <a href='https://github.com/program--/fipio/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
+    <h1>Check if a point intersects with a side of a polygon</h1>
+    <small class="dont-index">Source: <a href='https://github.com/program--/fipio/blob/master/R/internals.R'><code>R/internals.R</code></a></small>
+    <div class="hidden name"><code>dot-segment_intersect.Rd</code></div>
     </div>
 
-    <div id="fipio-1009000" class="section level1">
-<h1 class="page-header" data-toc-text="1.0.0.9000">
-<a href="#fipio-1009000" class="anchor"></a>fipio 1.0.0.9000<small> Unreleased </small>
-</h1>
-<ul>
-<li><strong><code>fipio</code> now depends on R &gt;= 3.5.0 due to using <code>.rds</code> and version 3 <code>.rda</code> files.</strong></li>
-<li>Added the function <code><a href="../reference/coords_to_fips.html">coords_to_fips()</a></code>, which provides coordinates to FIPS code utility. This is implemented without <code>sf</code> using a simple ray casting algorithm for intersections. Based on a few benchmarks, <code><a href="../reference/coords_to_fips.html">coords_to_fips()</a></code> performs approximately the same as using <code>sf::st_intersects()</code> against the geometry table, but is most likely slower in the case of having a <em>large</em> amount of points.</li>
-<li>Added the function <code><a href="../reference/as_fips.html">as_fips()</a></code>, which provides a reverse lookup utility for FIPS codes.</li>
-<li>Added <code>fastmatch</code> to <code>Suggests</code>. If <code>fastmatch</code> is installed, all <code>fipio</code> functions utilizing <code><a href="https://rdrr.io/r/base/match.html">base::match</a></code> will instead use <code><a href="https://rdrr.io/pkg/fastmatch/man/fmatch.html">fastmatch::fmatch</a></code>.
-<ul>
-<li>
-<em>Note:</em> this addition includes the function <code><a href="../reference/using_fastmatch.html">fipio::using_fastmatch()</a></code> for debugging purposes, and test coverage for <code>.has_fastmatch()</code>, <code><a href="../reference/using_fastmatch.html">using_fastmatch()</a></code>, and <code><a href="https://rdrr.io/r/base/ns-hooks.html">.onLoad()</a></code> are <em>essentially</em> covered by the unit test containing the function calls to <code>expect_match_assignment()</code>.</li>
-</ul>
-</li>
-</ul>
-</div>
-    <div id="fipio-100" class="section level1">
-<h1 class="page-header" data-toc-text="1.0.0">
-<a href="#fipio-100" class="anchor"></a>fipio 1.0.0<small> 2021-10-11 </small>
-</h1>
-<ul>
-<li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
-<li>Initial commit to version control with the following functions:
-<ul>
-<li>
-<code><a href="../reference/fips_abbr.html">fips_abbr()</a></code> - Gets state abbreviation.</li>
-<li>
-<code><a href="../reference/fips_state.html">fips_state()</a></code> - Gets state name.</li>
-<li>
-<code><a href="../reference/fips_county.html">fips_county()</a></code> - Gets county name.</li>
-<li>
-<code><a href="../reference/fips_geometry.html">fips_geometry()</a></code> - Gets geometry.</li>
-<li>
-<code><a href="../reference/fips_metadata.html">fips_metadata()</a></code> - Gets the information above as a <code>data.frame</code>.</li>
-</ul>
-</li>
-</ul>
-</div>
-  </div>
+    <div class="ref-description">
+    <p>Check if a point intersects with a side of a polygon</p>
+    </div>
 
+    <pre class="usage"><span class='fu'>.segment_intersect</span><span class='op'>(</span><span class='va'>side</span>, <span class='va'>x</span>, <span class='va'>y</span><span class='op'>)</span></pre>
+
+
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
-
 </div>
 
 

@@ -175,6 +175,51 @@
 <span class="co">#&gt; MULTIPOLYGON (((-71.36521 41.73565, -71.3174 41...</span>
 <span class="co">#&gt; MULTIPOLYGON (((-102.2085 32.95896, -102.0762 3...</span></code></pre></div>
 </div>
+<div id="reverse-geolocate-coordinates-to-fips-fipio--1009000" class="section level3">
+<h3 class="hasAnchor">
+<a href="#reverse-geolocate-coordinates-to-fips-fipio--1009000" class="anchor"></a>Reverse Geolocate Coordinates to FIPS (<code>fipio</code> &gt;= 1.0.0.9000)</h3>
+<p><code>fipio</code> contains the ability to locate the FIPS code(s) for a set of coordinates (in <code>WGS84</code>/<code>EPSG: 4326</code>):</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># With a single set of coordinates</span>
+<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/coords_to_fips.html">coords_to_fips</a></span><span class="op">(</span>x <span class="op">=</span> <span class="op">-</span><span class="fl">119.8696</span>, y <span class="op">=</span> <span class="fl">34.4184</span><span class="op">)</span>
+<span class="co">#&gt; [1] "06083"</span>
+
+<span class="co"># Vectorized</span>
+<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/coords_to_fips.html">coords_to_fips</a></span><span class="op">(</span>
+    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">81.4980534549709</span>, <span class="op">-</span><span class="fl">81.1249425046948</span><span class="op">)</span>,
+    y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">36.4314781444978</span>, <span class="fl">36.4911893240597</span><span class="op">)</span>
+<span class="op">)</span>
+<span class="co">#&gt; [1] "37009" "37005"</span>
+
+<span class="co"># With a `data.frame` or `matrix`</span>
+<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/coords_to_fips.html">coords_to_fips</a></span><span class="op">(</span>
+    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>
+        X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">81.4980534549709</span>, <span class="op">-</span><span class="fl">81.1249425046948</span><span class="op">)</span>,
+        Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">36.4314781444978</span>, <span class="fl">36.4911893240597</span><span class="op">)</span>
+    <span class="op">)</span>,
+    coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"X"</span>, <span class="st">"Y"</span><span class="op">)</span>
+<span class="op">)</span>
+<span class="co">#&gt; [1] "37009" "37005"</span>
+
+<span class="co"># With an `sfg` object</span>
+<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/coords_to_fips.html">coords_to_fips</a></span><span class="op">(</span>
+    x   <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu">st_point</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">81.4980534549709</span>,
+                         <span class="fl">36.4314781444978</span><span class="op">)</span><span class="op">)</span>,
+    dim <span class="op">=</span> <span class="st">"XY"</span>
+<span class="op">)</span>
+<span class="co">#&gt; [1] "37009"</span>
+
+<span class="co"># With an `sf` object</span>
+<span class="fu">fipio</span><span class="fu">::</span><span class="fu"><a href="reference/coords_to_fips.html">coords_to_fips</a></span><span class="op">(</span>
+    x <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu">st_as_sf</span><span class="op">(</span>
+        <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>X <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">81.4980534549709</span>, <span class="op">-</span><span class="fl">81.1249425046948</span><span class="op">)</span>,
+                   Y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">36.4314781444978</span>, <span class="fl">36.4911893240597</span><span class="op">)</span><span class="op">)</span>,
+        coords <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"X"</span>, <span class="st">"Y"</span><span class="op">)</span>,
+        crs <span class="op">=</span> <span class="fl">4326</span>
+    <span class="op">)</span>
+<span class="op">)</span>
+<span class="co">#&gt; [1] "37009" "37005"</span></code></pre></div>
+</div>
 </div>
 </div>
   </div>
