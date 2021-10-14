@@ -73,6 +73,7 @@ testthat::test_that("`fmatch` is assigned to `match` if it is installed", {
 
 # Test geolocation function
 testthat::test_that("fipio geolocates on `base` classes", {
+    testthat::skip_if(R.Version()$major != "4" & R.Version()$minor != "1.1")
     indices <- sample(seq_len(nrow(geolocate_data)), 10)
 
     # Single Numeric
