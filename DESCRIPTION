@@ -23,5 +23,8 @@ Suggests:
     mockery (>= 0.4.2),
     covr,
     sfheaders,
-    fastmatch
+    fastmatch,
+    knitr,
+    rmarkdown
 Config/testthat/edition: 3
+VignetteBuilder: knitr

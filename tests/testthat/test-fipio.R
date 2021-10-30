@@ -74,7 +74,7 @@ testthat::test_that("`fmatch` is assigned to `match` if it is installed", {
 # Test geolocation function
 testthat::test_that("fipio geolocates on `base` classes", {
     testthat::skip_if(R.Version()$major != "4" & R.Version()$minor != "1.1")
-    indices <- sample(seq_len(nrow(geolocate_data)), 10)
+    indices <- sample(seq_len(nrow(geolocate_data)), 30)
 
     # Single Numeric
     testthat::expect_identical(
@@ -129,7 +129,7 @@ testthat::test_that("fipio geolocates on `base` classes", {
                     geolocate_data$X[indices],
                     geolocate_data$Y[indices]
                 ),
-                ncol = 2, nrow = 10
+                ncol = 2, nrow = 30
             )
         ),
         geolocate_data$FIPS[indices]

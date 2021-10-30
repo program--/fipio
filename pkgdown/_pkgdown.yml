@@ -9,9 +9,19 @@ template:
     bootswatch: paper
   
 reference:
-  - contents:
+  - title: FIPS Lookup
+    contents:
     - fips_abbr
     - fips_state
     - fips_county
     - fips_geometry
     - fips_metadata
+
+  - title: Reverse FIPS Lookup
+    contents:
+    - as_fips
+    - coords_to_fips
+
+  - title: Development
+    contents:
+    - using_fastmatch

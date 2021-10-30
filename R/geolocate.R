@@ -75,21 +75,26 @@ coords_to_fips.numeric <- function(x, y, ...) {
     )))
 
     lookup <- lookup[indices, ]
+
     lookup <- cbind(lookup$fip_code,
                     index = lapply(lookup$geometry,
                                    .intersects,
                                    x = x,
                                    y = y))
-    lookup <- lookup[
-        which(!unlist(lapply(lookup[, 2], identical, numeric(0)))),
-    ]
+
+    lookup <- lookup[lengths(lookup)[, 2] > 0, ]
 
     if (nrow(as.data.frame(lookup)) == 1) {
         lookup[[1]]
     } else {
+        tmp        <- lookup[, 2]
+        names(tmp) <- lookup[, 1]
+        tmp        <- unlist(tmp)
+        names(tmp) <- substr(names(tmp), 1, 5)
+
         lookup <- data.frame(
-            fips  = unlist(lookup[, 1]),
-            index = unlist(lookup[, 2])
+            fips  = names(tmp),
+            index = unname(tmp)
         )
 
         lookup[order(lookup$index), ]$fips
