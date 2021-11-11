@@ -1,7 +1,7 @@
 fip_codes    <- c("46093", "30099", "72015", "29229", "01083")
 state_abbrs  <- c("SD", "MT", "PR", "MO", "AL")
 state_names  <- c("South Dakota", "Montana", "Puerto Rico", "Missouri", "Alabama")
-county_names <- c("Meade", "Teton", "Arroyo Municipio", "Wright", "Limestone")
+county_names <- c("Meade", "Teton", "Arroyo", "Wright", "Limestone")
 
 # Vectorized test
 local_fipio(
@@ -57,6 +57,7 @@ testthat::test_that("as_fips edge cases", {
 
 # Test error
 testthat::test_that("fipio returns an error if `sfheaders` is not installed", {
+    testthat::skip_if(!requireNamespace("mockery", quietly = TRUE))
     mockery::stub(fips_geometry, ".has_sfheaders", FALSE)
     testthat::expect_error(fips_geometry(NA))
 })
@@ -64,6 +65,7 @@ testthat::test_that("fipio returns an error if `sfheaders` is not installed", {
 # Test matching function
 # Coverage for matchfn(), .has_fastmatch(), .onLoad()
 testthat::test_that("`fmatch` is assigned to `match` if it is installed", {
+    testthat::skip_if(!requireNamespace("mockery", quietly = TRUE))
     m <- mockery::mock(FALSE, TRUE)
     mockery::stub(expect_match_assignment, ".has_fastmatch", m)
 

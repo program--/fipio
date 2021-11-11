@@ -72,7 +72,10 @@ expect_metadata <- function(fip, expected) {
         testthat::expect_equal(meta$state_name, expected)
     } else {
         exp_names <- c("state_code", "county_code", "fip_code",
-                    "state_abbr", "state_name", "county_name")
+                    "state_abbr", "state_name", "county_name",
+                    "feature_code", "fips_class", "tiger_class",
+                    "combined_area_code", "metropolitan_area_code",
+                    "functional_status", "land_area", "water_area")
 
         testthat::expect_equal(meta$county_name, expected)
     }
