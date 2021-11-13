@@ -16,7 +16,7 @@ local_fipio(
     fip_code    = c(fip_codes[1], substr(fip_codes[2], 1, 2)),
     state_abbr  = state_abbrs[1:2],
     state_name  = state_names[1:2],
-    county_name = c(county_names[1], NA)
+    county_name = c(county_names[1], state_names[2])
 )
 
 # Individual tests
@@ -161,5 +161,27 @@ testthat::test_that("fipio geolocates on `sf` classes", {
     testthat::expect_identical(
         fipio::coords_to_fips(geolocate_data[indices[1], ]$geometry),
         geolocate_data$FIPS[indices[1]]
+    )
+})
+
+testthat::test_that("fipio matches zip codes to FIPS", {
+    testthat::expect_true(
+        "06099" %in% fipio::zip_to_fips("95380")$`95380`
+    )
+
+    testthat::expect_true(
+        "06099" %in% fipio::zip_to_fips("28401", "95380")$`95380` &
+        "37129" %in% fipio::zip_to_fips("28401", "95380")$`28401`
+    )
+})
+
+testthat::test_that("fipio matches FIPS to zip code", {
+    testthat::expect_true(
+        "95380" %in% fipio::fips_to_zip("06099")$`06099`
+    )
+
+    testthat::expect_true(
+        "95380" %in% fipio::fips_to_zip("37129", "06099")$`06099` &
+        "28401" %in% fipio::fips_to_zip("37129", "06099")$`37129`
     )
 })

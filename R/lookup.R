@@ -26,9 +26,12 @@ as_fips <- function(state, county = NULL) {
     if (any(!is.null(county))) {
         state_abbrs  <- fips_$state_abbr[indices]
         county       <- trimws(gsub("county", "", tolower(county)))
-        county_tbl   <- fips_[fips_$state_abbr %in% state_abbrs, c(3, 4, 6)]
+        county_tbl   <- fips_[
+            fips_$state_abbr %in% state_abbrs,
+            c("fip_code", "name")
+        ]
         county_codes <- county_tbl$fip_code[
-            match(county, tolower(county_tbl$county_name))
+            match(county, tolower(county_tbl$name))
         ]
 
         if (all(is.na(county_codes))) {
@@ -55,8 +58,7 @@ as_fips <- function(state, county = NULL) {
 #'
 #' @export
 fips_abbr <- function(fip) {
-    tmp <- unique(fips_[, c(1, 4)])
-    tmp[[2]][match(substr(fip, 1, 2), tmp[[1]])]
+    fips_$state_abbr[.index(fip)]
 }
 
 #' @title Get the state name for a FIPS code
@@ -68,8 +70,11 @@ fips_abbr <- function(fip) {
 #'
 #' @export
 fips_state <- function(fip) {
-    tmp <- unique(fips_[, c(1, 5)])
-    tmp[[2]][match(substr(fip, 1, 2), tmp[[1]])]
+    ifelse(
+        nchar(fip) == 2,
+        fips_$name[.index(fip)],
+        fips_$state_name[.index(fip)]
+    )
 }
 
 #' @title Get the county name for a FIPS code
@@ -84,8 +89,11 @@ fips_state <- function(fip) {
 #'
 #' @export
 fips_county <- function(fip) {
-    tmp <- fips_[, c(3, 6)]
-    tmp[[2]][match(fip, tmp[[1]])]
+    ifelse(
+        nchar(fip) == 2,
+        as.character(NA),
+        fips_$name[.index(fip)]
+    )
 }
 
 
@@ -117,30 +125,10 @@ fips_geometry <- function(fip) {
 #'
 #' @export
 fips_metadata <- function(fip, geometry = FALSE) {
-    df <- do.call(rbind, lapply(
-        X = fip,
-        FUN = function(f) {
-            if (nchar(f) == 2) {
-                tmp <- unique(fips_[, c(1, 4, 5)])
-                tmp <- tmp[match(f, tmp[[1]]), ]
-                tmp$fip_code <- tmp$state_code
-
-                if (any(nchar(fip) == 5)) {
-                    tmp$county_code <- NA
-                    tmp$county_name <- NA
-                }
-            } else {
-                tmp <- fips_[match(substr(f, 1, 5), fips_[[3]]), ]
-            }
-
-            tmp
-        }
-    ))
-
+    df <- fips_[.index(fip), ]
+    df[is.na(df$state_name), ]$state_name <- df[is.na(df$state_name), ]$name
     if (geometry) df$geometry <- fips_geometry(df$fip_code)
-
     rownames(df) <- NULL
-
     df
 }
 

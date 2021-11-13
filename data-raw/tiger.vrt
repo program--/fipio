@@ -1,0 +1,11 @@
+<OGRVRTDataSource>
+    <OGRVRTLayer name="tl_2021_us_county">
+        <SrcDataSource>./data-raw/county_shp/tl_2021_us_county.shp</SrcDataSource>
+    </OGRVRTLayer>
+    <OGRVRTLayer name="tl_2021_us_state">
+        <SrcDataSource>./data-raw/state_shp/tl_2021_us_state.shp</SrcDataSource>
+    </OGRVRTLayer>
+    <OGRVRTLayer name="tl_2021_us_zcta520">
+        <SrcDataSource>./data-raw/zcta_shp/tl_2021_us_zcta520.shp</SrcDataSource>
+    </OGRVRTLayer>
+</OGRVRTDataSource>

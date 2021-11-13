@@ -84,3 +84,8 @@
     }
 }
 #nocov end
+
+#' @keywords internal
+.index <- function(fips, tbl = "fips") {
+    match(substr(fips, 1, 5), fips_$fip_code)
+}
