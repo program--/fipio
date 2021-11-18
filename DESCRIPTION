@@ -1,6 +1,6 @@
 Package: fipio
 Title: Lightweight Federal Information Processing System (FIPS) Code Information Retrieval
-Version: 1.0.0.9000
+Version: 1.1.0
 Authors@R: 
     person(given = "Justin",
            family = "Singh-Mohudpur",

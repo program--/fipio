@@ -15,19 +15,19 @@ as_fips <- function(state, county = NULL) {
     }
 
     state   <- tolower(state)
-    indices <- match(state, tolower(fips_$state_abbr))
+    indices <- match(state, tolower(tbl_fips$state_abbr))
 
-    tmp <- match(state, tolower(fips_$state_name))
+    tmp <- match(state, tolower(tbl_fips$state_name))
     indices[is.na(indices)] <- tmp[!is.na(tmp)]
     rm(tmp)
 
-    ret <- fips_$state_code[indices]
+    ret <- tbl_fips$state_code[indices]
 
     if (any(!is.null(county))) {
-        state_abbrs  <- fips_$state_abbr[indices]
+        state_abbrs  <- tbl_fips$state_abbr[indices]
         county       <- trimws(gsub("county", "", tolower(county)))
-        county_tbl   <- fips_[
-            fips_$state_abbr %in% state_abbrs,
+        county_tbl   <- tbl_fips[
+            tbl_fips$state_abbr %in% state_abbrs,
             c("fip_code", "name")
         ]
         county_codes <- county_tbl$fip_code[
@@ -58,7 +58,7 @@ as_fips <- function(state, county = NULL) {
 #'
 #' @export
 fips_abbr <- function(fip) {
-    fips_$state_abbr[.index(fip)]
+    with(tbl_fips, state_abbr[.index(fip)])
 }
 
 #' @title Get the state name for a FIPS code
@@ -70,11 +70,9 @@ fips_abbr <- function(fip) {
 #'
 #' @export
 fips_state <- function(fip) {
-    ifelse(
-        nchar(fip) == 2,
-        fips_$name[.index(fip)],
-        fips_$state_name[.index(fip)]
-    )
+    x <- with(tbl_fips, state_name[.index(fip)])
+    x[is.na(x)] <- with(tbl_fips, name[.index(fip)])[is.na(x)]
+    x
 }
 
 #' @title Get the county name for a FIPS code
@@ -89,11 +87,9 @@ fips_state <- function(fip) {
 #'
 #' @export
 fips_county <- function(fip) {
-    ifelse(
-        nchar(fip) == 2,
-        as.character(NA),
-        fips_$name[.index(fip)]
-    )
+    x <- with(tbl_fips, name[.index(fip)])
+    x[nchar(fip) == 2] <- NA
+    x
 }
 
 
@@ -108,11 +104,7 @@ fips_county <- function(fip) {
 #'
 #' @export
 fips_geometry <- function(fip) {
-    if (.has_sfheaders()) {
-        geo_$geometry[match(fip, geo_$fip_code)]
-    } else {
-        stop("`fipio::geometry()` requires `sfheaders`.", call. = FALSE)
-    }
+    with(tbl_geo, geometry[.index(fip, tbl_geo)])
 }
 
 #' @title Get the metadata for a FIPS code
@@ -125,7 +117,7 @@ fips_geometry <- function(fip) {
 #'
 #' @export
 fips_metadata <- function(fip, geometry = FALSE) {
-    df <- fips_[.index(fip), ]
+    df <- tbl_fips[.index(fip), ]
     df[is.na(df$state_name), ]$state_name <- df[is.na(df$state_name), ]$name
     if (geometry) df$geometry <- fips_geometry(df$fip_code)
     rownames(df) <- NULL

@@ -86,6 +86,6 @@
 #nocov end
 
 #' @keywords internal
-.index <- function(fips, tbl = "fips") {
-    match(substr(fips, 1, 5), fips_$fip_code)
+.index <- function(fips, tbl = tbl_fips) {
+    with(tbl, match(fips, fip_code))
 }

@@ -56,11 +56,11 @@ testthat::test_that("as_fips edge cases", {
 })
 
 # Test error
-testthat::test_that("fipio returns an error if `sfheaders` is not installed", {
-    testthat::skip_if(!requireNamespace("mockery", quietly = TRUE))
-    mockery::stub(fips_geometry, ".has_sfheaders", FALSE)
-    testthat::expect_error(fips_geometry(NA))
-})
+# testthat::test_that("fipio returns an error if `sfheaders` is not installed", {
+#     testthat::skip_if(!requireNamespace("mockery", quietly = TRUE))
+#     mockery::stub(fips_geometry, ".has_sfheaders", FALSE)
+#     testthat::expect_error(fips_geometry(NA))
+# })
 
 # Test matching function
 # Coverage for matchfn(), .has_fastmatch(), .onLoad()

@@ -7,7 +7,11 @@
 #' fipio::zip_to_fips("95380", "28412")
 #' @export
 zip_to_fips <- function(zip_code, ...) {
-    .zipfip(zip_code, ..., col = "zip_code", opp = "fip_code")
+    codes <- c(zip_code, ...)
+    x <- strsplit(with(tbl_zip, fip_code[match(codes, zip_code)]), ":")
+    names(x) <- codes
+
+    x
 }
 
 #' @title Get zip codes for a given FIPS code.
@@ -19,18 +23,21 @@ zip_to_fips <- function(zip_code, ...) {
 #' fipio::fips_to_zip("37129", "06099")
 #' @export
 fips_to_zip <- function(fip_code, ...) {
-    .zipfip(fip_code, ..., col = "fip_code", opp = "zip_code")
+    codes <- c(fip_code, ...)
+    x <- lapply(codes, function(fip) {
+        with(tbl_zip, zip_code[which(grepl(fip, fip_code))])
+    })
+    names(x) <- codes
+
+    x
 }
 
-#' @keywords internal
-.zipfip <- function(..., col, opp) {
-    codes    <- c(...)
-    x        <- zip_[which(zip_[[col]] %in% codes), ]
-    x        <- split(x, f = x[[col]])
-    x_nms    <- names(x)
-    x        <- lapply(x, function(y) y[[opp]])
-    names(x) <- x_nms
-    x        <- x[codes]
-    names(x) <- codes
-    x
+#' @title Get zip code geometry
+#' @param zip_code a 5-digit US zip code
+#' @param ... Additional zip codes
+#' @return an `sfc` object of zip_code geometries
+#' @export
+zip_geometry <- function(zip_code, ...) {
+    codes <- c(zip_code, ...)
+    with(tbl_zip, geometry[match(codes, zip_code)])
 }
