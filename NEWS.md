@@ -8,6 +8,7 @@
     - *Note:* this addition includes the function `fipio::using_fastmatch()` for debugging purposes, and test coverage for `.has_fastmatch()`, `using_fastmatch()`, and `.onLoad()` are *essentially* covered by the unit test containing the function calls to `expect_match_assignment()`.
 * Added `fips_to_zip()` and `zip_to_fips()` for FIPS to ZCTA lookup and reverse.
 * Updated internal FIPS table to TIGER 2021 and added internal ZCTA-FIPS table.
+* Added `zip_geometry()` for ZCTA geometry lookup.
 * Added `data-raw/` directory describing process to get internal tables.
     - *Note:* geometry table is not included in this due to the method for reducing the table size.
 
