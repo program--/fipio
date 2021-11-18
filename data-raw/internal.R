@@ -100,9 +100,33 @@ tbl_zip <-
     sf::st_transform(4326)
 
 # Save transformed data to internal tables ====================================
+predicate_zip <- function(x, y) {
+    indices <- list()
+    gint   <- sf::st_intersects(x, y)
+    gtouch <- sf::st_touches(x, y)
+
+    iter <- length(gint)
+
+    lapply(
+        seq_len(iter),
+        function(i) {
+            indices[[i]] <<-
+                gint[[i]][!gint[[i]] %in% gtouch[[i]]]
+        }
+    )
+
+    attr(indices, "predicate") <- "intersects & !touches"
+    attr(indices, "region.id") <- attr(gint, "region.id")
+    attr(indices, "ncol")      <- attr(gint, "ncol")
+    class(indices)             <- c("sgbp", "list")
+
+    indices
+}
+
 tbl_zip  <- tbl_zip %>%
             sf::st_join(
-                dplyr::filter(dplyr::select(tbl_fips, fip_code), nchar(fip_code) == 5)
+                dplyr::filter(dplyr::select(tbl_fips, fip_code), nchar(fip_code) == 5),
+                join = predicate_zip
             ) %>%
             dplyr::group_by(zip_code) %>%
             dplyr::mutate(fip_code = paste(fip_code, collapse = ":")) %>%
