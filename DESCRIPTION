@@ -22,9 +22,5 @@ Suggests:
     testthat (>= 3.0.0),
     mockery (>= 0.4.2),
     covr,
-    sfheaders,
-    fastmatch,
-    knitr,
-    rmarkdown
+    fastmatch (>= 1.0.0)
 Config/testthat/edition: 3
-VignetteBuilder: knitr

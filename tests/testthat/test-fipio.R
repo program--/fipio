@@ -77,13 +77,6 @@ testthat::test_that("as_fips edge cases", {
     )
 })
 
-# Test error
-# testthat::test_that("fipio returns an error if `sfheaders` is not installed", {
-#     testthat::skip_if(!requireNamespace("mockery", quietly = TRUE))
-#     mockery::stub(fips_geometry, ".has_sfheaders", FALSE)
-#     testthat::expect_error(fips_geometry(NA))
-# })
-
 # Test matching function
 # Coverage for match(), .has_fastmatch(), .onLoad()
 testthat::test_that("`fmatch` is assigned to `match` if it is installed", {
@@ -97,7 +90,11 @@ testthat::test_that("`fmatch` is assigned to `match` if it is installed", {
 
 # Test geolocation function
 testthat::test_that("fipio geolocates on `base` classes", {
-    testthat::skip_if(R.Version()$major != "4" & R.Version()$minor != "1.1")
+    testthat::skip_if(
+        as.numeric(R.Version()$major) < 3 &
+        as.numeric(R.Version()$minor) < 5
+    )
+
     indices <- sample(seq_len(nrow(geolocate_data)), 30)
 
     # Single Numeric
@@ -164,8 +161,8 @@ testthat::test_that("fipio geolocates on `base` classes", {
 })
 
 testthat::test_that("fipio geolocates on `sf` classes", {
-    testthat::skip_if_not_installed("sf")
-    testthat::skip_if_not_installed("sfheaders")
+    # testthat::skip_if_not_installed("sf")
+    # testthat::skip_if_not_installed("sfheaders")
     testthat::skip_on_cran()
 
     indices <- sample(seq_len(nrow(geolocate_data)), 10)

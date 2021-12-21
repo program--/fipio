@@ -41,6 +41,12 @@ coords_to_fips.sfg <- function(x, ...) {
 
 #' @rdname coords_to_fips
 #' @export
+coords_to_fips.list <- function(x, ...) {
+    coords_to_fips(x = do.call(rbind, x))
+}
+
+#' @rdname coords_to_fips
+#' @export
 coords_to_fips.data.frame <- function(x, coords = c(1, 2), ...) {
     coords_to_fips(x = x[[coords[1]]],
                    y = x[[coords[2]]])

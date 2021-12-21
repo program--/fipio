@@ -9,7 +9,7 @@ fips_metadata(fip, geometry = FALSE)
 \arguments{
 \item{fip}{2-digit or 5-digit FIPS code}
 
-\item{geometry}{If \code{TRUE}, returns a geometry column (requires \code{sfheaders})}
+\item{geometry}{If \code{TRUE}, returns a geometry column}
 }
 \value{
 a \code{data.frame}

@@ -1,12 +1,15 @@
 #' @title Convert a state name, abbreviation, or county name to FIPS codes
-#' @param state State names or abbreviations
-#' @param county County names
+#' @param state State names, state abbreviations, or
+#'              one of the following: "all", "conus", "territories"
+#' @param county County names or "all"
 #' @return a `character` vector
 #' @examples
 #' fipio::as_fips(state = "California")
 #' fipio::as_fips(state = "NC")
 #' fipio::as_fips(state = "Rhode Island", county = "Washington")
 #' fipio::as_fips(c("CA", "North Carolina"), c("Stanislaus", "NEW HANOVER"))
+#' fipio::as_fips("CONUS")
+#' fipio::as_fips(state = "NC", county = "all")
 #'
 #' @export
 as_fips <- function(state, county = NULL) {
@@ -68,7 +71,7 @@ as_fips <- function(state, county = NULL) {
                 if (repl != length(state)) state[seq(repl + 1, length(state))]
             )
         }
-    
+
         # Return state fip codes based on name
         nms <- tolower(with(.metadata_fips, name[ind]))
         abr <- tolower(with(.metadata_fips, state_abbr[ind]))
@@ -176,7 +179,7 @@ fips_geometry <- function(fip) {
 
 #' @title Get the metadata for a FIPS code
 #' @inheritParams fips_abbr
-#' @param geometry If `TRUE`, returns a geometry column (requires `sfheaders`)
+#' @param geometry If `TRUE`, returns a geometry column
 #' @return a `data.frame`
 #' @examples
 #' fipio::fips_metadata("37")

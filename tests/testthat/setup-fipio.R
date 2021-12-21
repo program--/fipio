@@ -45,11 +45,6 @@ local_fipio <- function(fip_code, state_abbr, state_name, county_name) {
     })
 
     testthat::test_that(descs[2], {
-        testthat::skip_if_not(
-            requireNamespace("sfheaders", quietly = TRUE),
-            message = "`sfheaders` is not available."
-        )
-
         expect_geometry_class(fip_code)
     })
 

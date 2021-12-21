@@ -103,7 +103,7 @@ fipio::fips_geometry(fips)
 ```
 
 ### Reverse Geolocate Coordinates to FIPS
-`fipio` contains the ability to locate the FIPS code(s) for a set of coordinates (in `WGS84`/`EPSG: 4326`):
+`fipio` contains the ability to locate the FIPS code(s) for a set of coordinates (in `WGS84`/`EPSG:4326`):
 ```{r}
 # With a single set of coordinates
 fipio::coords_to_fips(x = -119.8696, y = 34.4184)
@@ -139,12 +139,4 @@ fipio::coords_to_fips(
         crs = 4326
     )
 )
-```
-
-### ZCTA/Zip Code Lookup & Reverse Lookup
-`fipio` includes information about US Zip Codes as well and provides the utility to find
-what FIPS codes are within a ZIP code, and vice versa.
-```{r}
-# Zip Code -> FIPS code
-fipio::zip_to_fips("93106")
 ```

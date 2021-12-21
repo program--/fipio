@@ -5,6 +5,7 @@
 \alias{coords_to_fips.sf}
 \alias{coords_to_fips.sfc}
 \alias{coords_to_fips.sfg}
+\alias{coords_to_fips.list}
 \alias{coords_to_fips.data.frame}
 \alias{coords_to_fips.matrix}
 \alias{coords_to_fips.character}
@@ -18,6 +19,8 @@ coords_to_fips(x, ...)
 \method{coords_to_fips}{sfc}(x, ...)
 
 \method{coords_to_fips}{sfg}(x, ...)
+
+\method{coords_to_fips}{list}(x, ...)
 
 \method{coords_to_fips}{data.frame}(x, coords = c(1, 2), ...)
 

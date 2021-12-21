@@ -7,9 +7,10 @@
 as_fips(state, county = NULL)
 }
 \arguments{
-\item{state}{State names or abbreviations}
+\item{state}{State names, state abbreviations, or
+one of the following: "all", "conus", "territories"}
 
-\item{county}{County names}
+\item{county}{County names or "all"}
 }
 \value{
 a \code{character} vector
@@ -22,5 +23,7 @@ fipio::as_fips(state = "California")
 fipio::as_fips(state = "NC")
 fipio::as_fips(state = "Rhode Island", county = "Washington")
 fipio::as_fips(c("CA", "North Carolina"), c("Stanislaus", "NEW HANOVER"))
+fipio::as_fips("CONUS")
+fipio::as_fips(state = "NC", county = "all")
 
 }

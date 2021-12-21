@@ -1,6 +1,6 @@
 ## Resubmission
 
-This is a resubmission. This version includes new features and fixes some issues. See the NEWS.md file for details.
+This is a resubmission. This version includes new features and bugfixes. See the NEWS.md file for details.
 
 ## Test environments
 

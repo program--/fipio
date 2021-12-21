@@ -65,25 +65,21 @@ fipio::fips_county(fip)
 
 # It'd be nice to have this all in a data.frame...
 fipio::fips_metadata(fip)
-#>   state_region state_division state_code county_code feature_code fip_code
-#> 1            3              5         37         129     01026329    37129
-#>       state_name state_abbr        name fip_class tiger_class
-#> 1 North Carolina         NC New Hanover        H1       G4020
-#>   combined_area_code metropolitan_area_code functional_status land_area
-#> 1               <NA>                   <NA>                 A 497937486
-#>   water_area
-#> 1  353803887
+#>   state_region state_division feature_code     state_name state_abbr
+#> 1            3              5      1026329 North Carolina         NC
+#>          name fip_class tiger_class combined_area_code metropolitan_area_code
+#> 1 New Hanover        H1       G4020                 NA                   <NA>
+#>   functional_status land_area water_area fip_code
+#> 1                 A 497937486  353803887    37129
 
 # And the metadata for the state by itself...
 fipio::fips_metadata("37")
-#>   state_region state_division state_code county_code feature_code fip_code
-#> 1            3              5         37        <NA>     01027616       37
-#>       state_name state_abbr           name fip_class tiger_class
-#> 1 North Carolina         NC North Carolina      <NA>       G4000
-#>   combined_area_code metropolitan_area_code functional_status    land_area
-#> 1               <NA>                   <NA>                 A 125933327733
-#>    water_area
-#> 1 13456093195
+#>   state_region state_division feature_code     state_name state_abbr
+#> 1            3              5      1027616 North Carolina         NC
+#>             name fip_class tiger_class combined_area_code
+#> 1 North Carolina      <NA>       G4000                 NA
+#>   metropolitan_area_code functional_status    land_area  water_area fip_code
+#> 1                   <NA>                 A 125933327733 13456093195       37
 ```
 
 ### With `sf`
@@ -100,18 +96,18 @@ fipio::fips_geometry(fip)
 #> Dimension:     XY
 #> Bounding box:  xmin: -78.02992 ymin: 33.7868 xmax: -77.67528 ymax: 34.38929
 #> Geodetic CRS:  WGS 84
-#> MULTIPOLYGON (((-77.89701 33.7868, -77.89369 33...
+#> MULTIPOLYGON (((-77.89701 33.7868, -77.8952 33....
 
 # What if I need it with my other metadata?
 fipio::fips_metadata(fip, geometry = TRUE)
-#>   state_region state_division state_code county_code feature_code fip_code
-#> 1            3              5         37         129     01026329    37129
-#>       state_name state_abbr        name fip_class tiger_class
-#> 1 North Carolina         NC New Hanover        H1       G4020
-#>   combined_area_code metropolitan_area_code functional_status land_area
-#> 1               <NA>                   <NA>                 A 497937486
-#>   water_area                       geometry
-#> 1  353803887 MULTIPOLYGON (((-77.89701 3...
+#>   state_region state_division feature_code     state_name state_abbr
+#> 1            3              5      1026329 North Carolina         NC
+#>          name fip_class tiger_class combined_area_code metropolitan_area_code
+#> 1 New Hanover        H1       G4020                 NA                   <NA>
+#>   functional_status land_area water_area                       geometry
+#> 1                 A 497937486  353803887 MULTIPOLYGON (((-77.89701 3...
+#>   fip_code
+#> 1    37129
 ```
 
 ### Vectorized
@@ -132,22 +128,18 @@ fipio::fips_county(fips)
 #> [1] "New Hanover" "Bristol"     "Dawson"
 
 fipio::fips_metadata(fips)
-#>   state_region state_division state_code county_code feature_code fip_code
-#> 1            3              5         37         129     01026329    37129
-#> 2            1              1         44         001     01219777    44001
-#> 3            3              7         48         115     01383843    48115
-#>       state_name state_abbr        name fip_class tiger_class
-#> 1 North Carolina         NC New Hanover        H1       G4020
-#> 2   Rhode Island         RI     Bristol        H4       G4020
-#> 3          Texas         TX      Dawson        H1       G4020
-#>   combined_area_code metropolitan_area_code functional_status  land_area
-#> 1               <NA>                   <NA>                 A  497937486
-#> 2                148                   <NA>                 N   62500772
-#> 3               <NA>                   <NA>                 A 2331781561
-#>   water_area
-#> 1  353803887
-#> 2   53359134
-#> 3    4720730
+#>   state_region state_division feature_code     state_name state_abbr
+#> 1            3              5      1026329 North Carolina         NC
+#> 2            1              1      1219777   Rhode Island         RI
+#> 3            3              7      1383843          Texas         TX
+#>          name fip_class tiger_class combined_area_code metropolitan_area_code
+#> 1 New Hanover        H1       G4020                 NA                   <NA>
+#> 2     Bristol        H4       G4020                148                   <NA>
+#> 3      Dawson        H1       G4020                 NA                   <NA>
+#>   functional_status  land_area water_area fip_code
+#> 1                 A  497937486  353803887    37129
+#> 2                 N   62500772   53359134    44001
+#> 3                 A 2331781561    4720730    48115
 
 fipio::fips_geometry(fips)
 #> Geometry set for 3 features 
@@ -155,15 +147,15 @@ fipio::fips_geometry(fips)
 #> Dimension:     XY
 #> Bounding box:  xmin: -102.2085 ymin: 32.52327 xmax: -71.20837 ymax: 41.7762
 #> Geodetic CRS:  WGS 84
-#> MULTIPOLYGON (((-77.89701 33.7868, -77.89369 33...
+#> MULTIPOLYGON (((-77.89701 33.7868, -77.8952 33....
 #> MULTIPOLYGON (((-71.33097 41.68696, -71.32372 4...
-#> MULTIPOLYGON (((-102.2027 32.52327, -102.0004 3...
+#> MULTIPOLYGON (((-102.2027 32.52327, -102.1201 3...
 ```
 
-### Reverse Geolocate Coordinates to FIPS (`fipio` \>= 1.0.0.9000)
+### Reverse Geolocate Coordinates to FIPS
 
 `fipio` contains the ability to locate the FIPS code(s) for a set of
-coordinates (in `WGS84`/`EPSG: 4326`):
+coordinates (in `WGS84`/`EPSG:4326`):
 
 ``` r
 # With a single set of coordinates
