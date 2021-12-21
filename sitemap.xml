@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://fipio.justinsingh.me/404.html</loc>
+  </url>
+  <url>
+    <loc>https://fipio.justinsingh.me/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://fipio.justinsingh.me/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://fipio.justinsingh.me/authors.html</loc>
+  </url>
+  <url>
     <loc>https://fipio.justinsingh.me/index.html</loc>
+  </url>
+  <url>
+    <loc>https://fipio.justinsingh.me/news/index.html</loc>
   </url>
   <url>
     <loc>https://fipio.justinsingh.me/reference/as_fips.html</loc>
@@ -29,6 +44,9 @@
   </url>
   <url>
     <loc>https://fipio.justinsingh.me/reference/fips_state.html</loc>
+  </url>
+  <url>
+    <loc>https://fipio.justinsingh.me/reference/index.html</loc>
   </url>
   <url>
     <loc>https://fipio.justinsingh.me/reference/using_fastmatch.html</loc>
