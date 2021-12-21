@@ -23,7 +23,7 @@ information about a US FIPS code.
 ## Installation
 
 You can install the released version of `fipio` from
-[CRAN](https://CRAN.R-project.org) with:
+[CRAN](https://cran.r-project.org/package=fipio) with:
 
 ``` r
 install.packages("fipio")
@@ -33,10 +33,10 @@ or the development version with `pak` or `remotes`:
 
 ``` r
 # Using `pak`
-pak::pkg_install("program--/fipio")
+pak::pkg_install("UFOKN/fipio")
 
 # Using `remotes`
-remotes::install_github("program--/fipio")
+remotes::install_github("UFOKN/fipio")
 ```
 
 ## Usage
