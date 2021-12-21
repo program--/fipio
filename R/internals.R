@@ -13,7 +13,6 @@
 #' @keywords internal
 .bbox <- function(geometry) {
     geometry <- .to_matrix(geometry)
-
     c(xmin = min(geometry[, 1]),
       ymin = min(geometry[, 2]),
       xmax = max(geometry[, 1]),
@@ -93,21 +92,29 @@
 
 #' @keywords internal
 .pad0 <- function(x) {
-    sprintf(
-        paste0(
-            "%0",
-            ifelse(nchar(x) < 3, 2, 5),
-            if (is.character(x)) "s" else "d"
-        ),
-        x
+    ifelse(
+        is.na(x),
+        as.character(x),
+        sprintf(
+            paste0(
+                "%0",
+                ifelse(nchar(x) < 3, 2, 5),
+                ifelse(is.character(x), "s", "d")
+            ),
+            x
+        )
     )
 }
 
 #' @keywords internal
 .pad <- function(x, len) {
-    sprintf(
-        paste0("%0", len, if (is.character(x)) "s" else "d"),
-        x
+    ifelse(
+        is.na(x),
+        as.character(x),
+        sprintf(
+            paste0("%0", len, ifelse(is.character(x), "s", "d")),
+            x
+        )
     )
 }
 

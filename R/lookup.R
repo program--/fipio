@@ -14,18 +14,61 @@ as_fips <- function(state, county = NULL) {
         stop("`state` must be specified at least.", call. = FALSE)
     }
 
+    contains_all <- "all" %in% state
+    contains_ter <- ("us-territories" %in% state) |
+                    ("territories" %in% state)
+
+    if (length(state) > 1) {
+        if (contains_all & !contains_ter) {
+            stop(paste("`state` must only also contain ",
+                       "'territories' or 'us-territories'",
+                       "when it contains 'all'."))
+        }
+    }
+
     state <- tolower(state)
+    state <- ifelse(
+        state == "virgin islands" | state == "us virgin islands",
+        "united states virgin islands",
+        ifelse(
+            state == "northern mariana islands" | state == "mariana islands",
+            "commonwealth of the northern mariana islands",
+            state
+        )
+    )
+
     ind   <- nchar(.lookup_fips) < 3
     ret   <- .lookup_fips[ind]
 
-    if ("all" %in% state) {
-        if (!"us-territories" %in% state & !"territories" %in% state) {
+    if (contains_all) {
+        if (!contains_ter) {
+            # Only states, no territories
             ret <- ret[ret < 60]
         }
     } else if ("conus" %in% state) {
         # Return all state fip codes, except HI, AK, Guam, etc.
-        ret <- ret[!ret %in% c(2, 15, 60, 66, 69, 72, 78)]
+        if (contains_ter) {
+            # CONUS and territories
+            ret <- ret[!ret %in% c(2, 15)]
+        } else {
+            # Only CONUS
+            ret <- ret[!ret %in% c(2, 15, 60, 66, 69, 72, 78)]
+        }
     } else {
+        if (contains_ter) {
+            repl <- which(state == "us-territories" | state == "territories")
+
+            state <- c(
+                state[seq_len(repl - 1)],
+                "american samoa",
+                "guam",
+                "commonwealth of the northern mariana islands",
+                "puerto rico",
+                "united states virgin islands",
+                if (repl != length(state)) state[seq(repl + 1, length(state))]
+            )
+        }
+    
         # Return state fip codes based on name
         nms <- tolower(with(.metadata_fips, name[ind]))
         abr <- tolower(with(.metadata_fips, state_abbr[ind]))
@@ -143,7 +186,7 @@ fips_geometry <- function(fip) {
 fips_metadata <- function(fip, geometry = FALSE) {
     df <- .metadata_fips[.index(fip), ]
     df[is.na(df$state_name), ]$state_name <- df[is.na(df$state_name), ]$name
-    if (geometry) df$geometry <- fips_geometry(df$fip_code)
+    if (geometry) df$geometry <- fips_geometry(fip)
 
     rownames(df)    <- NULL
     df$fip_code     <- .pad0(fip)

@@ -34,8 +34,8 @@ coords_to_fips.sfc <- function(x, ...) {
 #' @rdname coords_to_fips
 #' @export
 coords_to_fips.sfg <- function(x, ...) {
-    coords_to_fips(x = as.numeric(x)[1],
-                   y = as.numeric(x)[2])
+    coords_to_fips(x = as.numeric(x)[[1]],
+                   y = as.numeric(x)[[2]])
 }
 # nocov end
 
@@ -63,15 +63,13 @@ coords_to_fips.character <- function(x, y, ...) {
 #' @rdname coords_to_fips
 #' @export
 coords_to_fips.numeric <- function(x, y, ...) {
-    ind <- nchar(.lookup_fips) == 5
-    lookup <- data.frame(
-        fip_code = .lookup_fips[ind],
-        geometry = .geometry_fips[ind]
-    )
+    ind <- nchar(.lookup_fips) > 3
+    lookup_fips     <- .lookup_fips[ind]
+    lookup_geometry <- .geometry_fips[ind]
     rm(ind)
 
     indices <- which(unlist(lapply(
-        lookup$geometry,
+        lookup_geometry,
         FUN = function(g) {
             bb <- .bbox(g)
             any(x >= bb[1] & y >= bb[2] &
@@ -79,10 +77,10 @@ coords_to_fips.numeric <- function(x, y, ...) {
         }
     )))
 
-    lookup <- lookup[indices, ]
-
-    lookup <- cbind(lookup$fip_code,
-                    index = lapply(lookup$geometry,
+    lookup_fips     <- lookup_fips[indices]
+    lookup_geometry <- lookup_geometry[indices]
+    lookup <- cbind(lookup_fips,
+                    index = lapply(lookup_geometry,
                                    .intersects,
                                    x = x,
                                    y = y))
@@ -90,7 +88,7 @@ coords_to_fips.numeric <- function(x, y, ...) {
     lookup <- lookup[lengths(lookup)[, 2] > 0, ]
 
     if (nrow(as.data.frame(lookup)) == 1) {
-        lookup[[1]]
+        .pad0(lookup[[1]])
     } else {
         tmp        <- lookup[, 2]
         names(tmp) <- lookup[, 1]
@@ -102,6 +100,6 @@ coords_to_fips.numeric <- function(x, y, ...) {
             index = unname(tmp)
         )
 
-        lookup[order(lookup$index), ]$fips
+        .pad0(lookup[order(lookup$index), ]$fips)
     }
 }
