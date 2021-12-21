@@ -44,7 +44,13 @@
 
     # indices of the point(s) that intersect with `geometry`
     # i.e. if below = 6, then (x[6], y[6]) intersects `geometry`.
-    as.numeric(names(which(points_per_side %% 2 == 1)))
+    ret <- as.numeric(names(which(points_per_side %% 2 == 1)))
+
+    if (length(ret) == 0) {
+        NA_real_
+    } else {
+        ret
+    }
 }
 
 #' Check if a point intersects with a side of a polygon

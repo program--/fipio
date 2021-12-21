@@ -69,43 +69,37 @@ coords_to_fips.character <- function(x, y, ...) {
 #' @rdname coords_to_fips
 #' @export
 coords_to_fips.numeric <- function(x, y, ...) {
-    ind <- nchar(as.character(.lookup_fips)) > 3
-    lookup_fips     <- .lookup_fips[ind]
-    lookup_geometry <- .geometry_fips[ind]
-    rm(ind)
+    county_fips     <- nchar(as.character(.lookup_fips)) > 3
+    lookup_fips     <- .lookup_fips[county_fips]
+    lookup_geometry <- .geometry_fips[county_fips]
+    rm(county_fips)
 
-    indices <- which(unlist(lapply(
+    intersected <- which(vapply(
         lookup_geometry,
         FUN = function(g) {
             bb <- .bbox(g)
             any(x >= bb[1] & y >= bb[2] &
                 x <= bb[3] & y <= bb[4])
-        }
-    )))
+        },
+        FUN.VALUE = logical(1),
+        USE.NAMES = FALSE
+    ))
 
-    lookup_fips     <- lookup_fips[indices]
-    lookup_geometry <- lookup_geometry[indices]
-    lookup <- cbind(lookup_fips,
-                    index = lapply(lookup_geometry,
-                                   .intersects,
-                                   x = x,
-                                   y = y))
+    lookup_fips     <- lookup_fips[intersected]
+    lookup_geometry <- lookup_geometry[intersected]
 
-    lookup <- lookup[lengths(lookup)[, 2] > 0, ]
+    ret_index <- vapply(
+        lookup_geometry,
+        FUN = .intersects,
+        FUN.VALUE = numeric(1),
+        x = x,
+        y = y
+    )
 
-    if (nrow(as.data.frame(lookup)) == 1) {
-        .pad0(lookup[[1]])
-    } else {
-        tmp        <- lookup[, 2]
-        names(tmp) <- lookup[, 1]
-        tmp        <- unlist(tmp)
-        names(tmp) <- substr(names(tmp), 1, 5)
+    ret_value <- .pad0(lookup_fips)[!is.na(ret_index)]
+    ret_index <- ret_index[!is.na(ret_index)]
 
-        lookup <- data.frame(
-            fips  = names(tmp),
-            index = unname(tmp)
-        )
+    rm(lookup_fips, lookup_geometry)
 
-        .pad0(lookup[order(lookup$index), ]$fips)
-    }
+    ret_value[order(ret_index)]
 }
