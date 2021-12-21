@@ -7,8 +7,6 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/fipio)](https://CRAN.R-project.org/package=fipio)
-[![Devel
-Version](https://img.shields.io/badge/devel%20version-1.0.0.9000-blue.svg)](https://github.com/UFOKN/fipio)
 [![CRAN
 downloads](https://cranlogs.r-pkg.org/badges/fipio)](https://CRAN.R-project.org/package=fipio)
 [![codecov](https://codecov.io/gh/UFOKN/fipio/branch/master/graph/badge.svg?token=1ODDHARQM1)](https://codecov.io/gh/UFOKN/fipio)
