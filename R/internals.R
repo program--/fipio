@@ -93,7 +93,7 @@
         sprintf(
             paste0(
                 "%0",
-                ifelse(nchar(x) < 3, 2, 5),
+                ifelse(nchar(as.character(x)) < 3, 2, 5),
                 ifelse(is.character(x), "s", "d")
             ),
             x

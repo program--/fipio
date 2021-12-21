@@ -40,7 +40,7 @@ as_fips <- function(state, county = NULL) {
         )
     )
 
-    ind   <- nchar(.lookup_fips) < 3
+    ind   <- nchar(as.character(.lookup_fips)) < 3
     ret   <- .lookup_fips[ind]
 
     if (contains_all) {
@@ -158,7 +158,7 @@ fips_state <- function(fip) {
 #' @export
 fips_county <- function(fip) {
     x <- with(.metadata_fips, name[.index(fip)])
-    x[nchar(fip) == 2] <- NA
+    x[nchar(as.character(fip)) == 2] <- NA
     x
 }
 

@@ -69,7 +69,7 @@ coords_to_fips.character <- function(x, y, ...) {
 #' @rdname coords_to_fips
 #' @export
 coords_to_fips.numeric <- function(x, y, ...) {
-    ind <- nchar(.lookup_fips) > 3
+    ind <- nchar(as.character(.lookup_fips)) > 3
     lookup_fips     <- .lookup_fips[ind]
     lookup_geometry <- .geometry_fips[ind]
     rm(ind)
