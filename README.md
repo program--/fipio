@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# fipio
+# fipio <a href="https://github.com/program--/fipio"><img src="man/figures/logo.png" align="right" height="200"/></a>
 
 <!-- badges: start -->
 
@@ -65,13 +65,25 @@ fipio::fips_county(fip)
 
 # It'd be nice to have this all in a data.frame...
 fipio::fips_metadata(fip)
-#>   state_code county_code fip_code state_abbr     state_name county_name
-#> 1         37         129    37129         NC North Carolina New Hanover
+#>   state_region state_division state_code county_code feature_code fip_code
+#> 1            3              5         37         129     01026329    37129
+#>       state_name state_abbr        name fip_class tiger_class
+#> 1 North Carolina         NC New Hanover        H1       G4020
+#>   combined_area_code metropolitan_area_code functional_status land_area
+#> 1               <NA>                   <NA>                 A 497937486
+#>   water_area
+#> 1  353803887
 
 # And the metadata for the state by itself...
 fipio::fips_metadata("37")
-#>   state_code state_abbr     state_name fip_code
-#> 1         37         NC North Carolina       37
+#>   state_region state_division state_code county_code feature_code fip_code
+#> 1            3              5         37        <NA>     01027616       37
+#>       state_name state_abbr           name fip_class tiger_class
+#> 1 North Carolina         NC North Carolina      <NA>       G4000
+#>   combined_area_code metropolitan_area_code functional_status    land_area
+#> 1               <NA>                   <NA>                 A 125933327733
+#>    water_area
+#> 1 13456093195
 ```
 
 ### With `sf`
@@ -86,16 +98,20 @@ fipio::fips_geometry(fip)
 #> Geometry set for 1 feature 
 #> Geometry type: MULTIPOLYGON
 #> Dimension:     XY
-#> Bounding box:  xmin: -78.02992 ymin: 34.03824 xmax: -77.71351 ymax: 34.38903
+#> Bounding box:  xmin: -78.02992 ymin: 33.7868 xmax: -77.67528 ymax: 34.38929
 #> Geodetic CRS:  WGS 84
-#> MULTIPOLYGON (((-78.02992 34.33177, -77.82268 3...
+#> MULTIPOLYGON (((-77.89701 33.7868, -77.89369 33...
 
 # What if I need it with my other metadata?
 fipio::fips_metadata(fip, geometry = TRUE)
-#>   state_code county_code fip_code state_abbr     state_name county_name
-#> 1         37         129    37129         NC North Carolina New Hanover
-#>                         geometry
-#> 1 MULTIPOLYGON (((-78.02992 3...
+#>   state_region state_division state_code county_code feature_code fip_code
+#> 1            3              5         37         129     01026329    37129
+#>       state_name state_abbr        name fip_class tiger_class
+#> 1 North Carolina         NC New Hanover        H1       G4020
+#>   combined_area_code metropolitan_area_code functional_status land_area
+#> 1               <NA>                   <NA>                 A 497937486
+#>   water_area                       geometry
+#> 1  353803887 MULTIPOLYGON (((-77.89701 3...
 ```
 
 ### Vectorized
@@ -116,20 +132,32 @@ fipio::fips_county(fips)
 #> [1] "New Hanover" "Bristol"     "Dawson"
 
 fipio::fips_metadata(fips)
-#>   state_code county_code fip_code state_abbr     state_name county_name
-#> 1         37         129    37129         NC North Carolina New Hanover
-#> 2         44         001    44001         RI   Rhode Island     Bristol
-#> 3         48         115    48115         TX          Texas      Dawson
+#>   state_region state_division state_code county_code feature_code fip_code
+#> 1            3              5         37         129     01026329    37129
+#> 2            1              1         44         001     01219777    44001
+#> 3            3              7         48         115     01383843    48115
+#>       state_name state_abbr        name fip_class tiger_class
+#> 1 North Carolina         NC New Hanover        H1       G4020
+#> 2   Rhode Island         RI     Bristol        H4       G4020
+#> 3          Texas         TX      Dawson        H1       G4020
+#>   combined_area_code metropolitan_area_code functional_status  land_area
+#> 1               <NA>                   <NA>                 A  497937486
+#> 2                148                   <NA>                 N   62500772
+#> 3               <NA>                   <NA>                 A 2331781561
+#>   water_area
+#> 1  353803887
+#> 2   53359134
+#> 3    4720730
 
 fipio::fips_geometry(fips)
 #> Geometry set for 3 features 
 #> Geometry type: MULTIPOLYGON
 #> Dimension:     XY
-#> Bounding box:  xmin: -102.2085 ymin: 32.52327 xmax: -71.2086 ymax: 41.77726
+#> Bounding box:  xmin: -102.2085 ymin: 32.52327 xmax: -71.20837 ymax: 41.7762
 #> Geodetic CRS:  WGS 84
-#> MULTIPOLYGON (((-78.02992 34.33177, -77.82268 3...
-#> MULTIPOLYGON (((-71.36521 41.73565, -71.3174 41...
-#> MULTIPOLYGON (((-102.2085 32.95896, -102.0762 3...
+#> MULTIPOLYGON (((-77.89701 33.7868, -77.89369 33...
+#> MULTIPOLYGON (((-71.33097 41.68696, -71.32372 4...
+#> MULTIPOLYGON (((-102.2027 32.52327, -102.0004 3...
 ```
 
 ### Reverse Geolocate Coordinates to FIPS (`fipio` \>= 1.0.0.9000)

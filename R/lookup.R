@@ -11,42 +11,66 @@
 #' @export
 as_fips <- function(state, county = NULL) {
     if (missing(state) | any(state == "") | is.null(state)) {
-        stop("`state` must be specificed at least.", call. = FALSE)
+        stop("`state` must be specified at least.", call. = FALSE)
     }
 
-    state   <- tolower(state)
-    indices <- match(state, tolower(tbl_fips$state_abbr))
+    state <- tolower(state)
+    ind   <- nchar(.lookup_fips) < 3
+    ret   <- .lookup_fips[ind]
 
-    tmp <- match(state, tolower(tbl_fips$state_name))
-    indices[is.na(indices)] <- tmp[!is.na(tmp)]
-    rm(tmp)
+    if ("all" %in% state) {
+        if (!"us-territories" %in% state & !"territories" %in% state) {
+            ret <- ret[ret < 60]
+        }
+    } else if ("conus" %in% state) {
+        # Return all state fip codes, except HI, AK, Guam, etc.
+        ret <- ret[!ret %in% c(2, 15, 60, 66, 69, 72, 78)]
+    } else {
+        # Return state fip codes based on name
+        nms <- tolower(with(.metadata_fips, name[ind]))
+        abr <- tolower(with(.metadata_fips, state_abbr[ind]))
+        x <- match(state, nms)
+        y <- match(state, abr)
+        rm(nms, abr)
 
-    ret <- tbl_fips$state_code[indices]
+        x[is.na(x)] <- y[!is.na(y)]
+        ret <- ret[x]
+        rm(x, y)
+    }
 
     if (any(!is.null(county))) {
-        state_abbrs  <- tbl_fips$state_abbr[indices]
-        county       <- trimws(gsub("county", "", tolower(county)))
-        county_tbl   <- tbl_fips[
-            tbl_fips$state_abbr %in% state_abbrs,
-            c("fip_code", "name")
-        ]
-        county_codes <- county_tbl$fip_code[
-            match(county, tolower(county_tbl$name))
-        ]
+        county <- tolower(county)
+        c_ind  <- !ind & as.integer(substr(.pad0(.lookup_fips), 1, 2)) %in% ret
 
-        if (all(is.na(county_codes))) {
-            repl <- TRUE
+        if ("all" %in% county) {
+            if (length(county) == 1) {
+                # Return all fip codes in every state
+                ret <- .lookup_fips[c_ind]
+            } else {
+                ret <- unlist(mapply(as_fips, state, county))
+            }
         } else {
-            repl <- !is.na(c(
-                county_codes,
-                rep(NA, length(ret) - length(county_codes))
-            ))
-        }
+            abr <- with(.metadata_fips, state_abbr[match(ret, .lookup_fips)])
+            county   <- trimws(gsub("county", "", county))
+            counties <- with(.metadata_fips, name[c_ind])
+            county_codes <- .lookup_fips[c_ind][
+                match(county, tolower(counties))
+            ]
 
-        ret[repl] <- county_codes[repl]
+            if (all(is.na(county_codes))) {
+                repl <- TRUE
+            } else {
+                repl <- !is.na(c(
+                    county_codes,
+                    rep(NA, length(ret) - length(county_codes))
+                ))
+            }
+
+            ret[repl] <- county_codes[repl]
+        }
     }
 
-    ret
+    .pad0(ret)
 }
 
 #' @title Get the state abbreviation for a FIPS code
@@ -58,7 +82,7 @@ as_fips <- function(state, county = NULL) {
 #'
 #' @export
 fips_abbr <- function(fip) {
-    with(tbl_fips, state_abbr[.index(fip)])
+    with(.metadata_fips, state_abbr[.index(fip)])
 }
 
 #' @title Get the state name for a FIPS code
@@ -70,8 +94,8 @@ fips_abbr <- function(fip) {
 #'
 #' @export
 fips_state <- function(fip) {
-    x <- with(tbl_fips, state_name[.index(fip)])
-    x[is.na(x)] <- with(tbl_fips, name[.index(fip)])[is.na(x)]
+    x <- with(.metadata_fips, state_name[.index(fip)])
+    x[is.na(x)] <- with(.metadata_fips, name[.index(fip)])[is.na(x)]
     x
 }
 
@@ -87,7 +111,7 @@ fips_state <- function(fip) {
 #'
 #' @export
 fips_county <- function(fip) {
-    x <- with(tbl_fips, name[.index(fip)])
+    x <- with(.metadata_fips, name[.index(fip)])
     x[nchar(fip) == 2] <- NA
     x
 }
@@ -104,7 +128,7 @@ fips_county <- function(fip) {
 #'
 #' @export
 fips_geometry <- function(fip) {
-    with(tbl_geo, geometry[.index(fip, tbl_geo)])
+    .geometry_fips[.index(fip)]
 }
 
 #' @title Get the metadata for a FIPS code
@@ -117,10 +141,13 @@ fips_geometry <- function(fip) {
 #'
 #' @export
 fips_metadata <- function(fip, geometry = FALSE) {
-    df <- tbl_fips[.index(fip), ]
+    df <- .metadata_fips[.index(fip), ]
     df[is.na(df$state_name), ]$state_name <- df[is.na(df$state_name), ]$name
     if (geometry) df$geometry <- fips_geometry(df$fip_code)
-    rownames(df) <- NULL
+
+    rownames(df)    <- NULL
+    df$fip_code     <- .pad0(fip)
+    df$feature_code <- .pad(df$feature_code, 7)
     df
 }
 

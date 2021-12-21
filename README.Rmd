@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# fipio
+# fipio <a href="https://github.com/program--/fipio"><img src="man/figures/logo.png" align="right" height="200"/></a>
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/fipio)](https://CRAN.R-project.org/package=fipio)
@@ -102,7 +102,7 @@ fipio::fips_metadata(fips)
 fipio::fips_geometry(fips)
 ```
 
-### Reverse Geolocate Coordinates to FIPS (`fipio` >= 1.0.0.9000)
+### Reverse Geolocate Coordinates to FIPS
 `fipio` contains the ability to locate the FIPS code(s) for a set of coordinates (in `WGS84`/`EPSG: 4326`):
 ```{r}
 # With a single set of coordinates
@@ -139,4 +139,12 @@ fipio::coords_to_fips(
         crs = 4326
     )
 )
+```
+
+### ZCTA/Zip Code Lookup & Reverse Lookup
+`fipio` includes information about US Zip Codes as well and provides the utility to find
+what FIPS codes are within a ZIP code, and vice versa.
+```{r}
+# Zip Code -> FIPS code
+fipio::zip_to_fips("93106")
 ```

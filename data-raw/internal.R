@@ -39,6 +39,29 @@
 
 library(dplyr)
 
+predicate_zip <- function(x, y) {
+    indices <- list()
+    gint   <- sf::st_intersects(x, y)
+    gtouch <- sf::st_touches(x, y)
+
+    iter <- length(gint)
+
+    lapply(
+        seq_len(iter),
+        function(i) {
+            indices[[i]] <<-
+                gint[[i]][!gint[[i]] %in% gtouch[[i]]]
+        }
+    )
+
+    attr(indices, "predicate") <- "intersects & !touches"
+    attr(indices, "region.id") <- attr(gint, "region.id")
+    attr(indices, "ncol")      <- attr(gint, "ncol")
+    class(indices)             <- c("sgbp", "list")
+
+    indices
+}
+
 # Load shapefiles and transform
 tiger_vrt  <- "data-raw/tiger-local.vrt"
 
@@ -46,8 +69,7 @@ fips_query <- "
 SELECT
     states.REGION AS state_region,
     states.DIVISION AS state_division,
-    counties.STATEFP AS state_code,
-    counties.COUNTYFP AS county_code,
+    counties.STATEFP as state_code,
     counties.COUNTYNS AS feature_code,
     counties.GEOID AS fip_code,
     states.NAME as state_name,
@@ -86,67 +108,49 @@ FROM
 "
 
 tbl_fips <- sf::st_read(tiger_vrt, query = fips_query, quiet = TRUE) %>%
-         sf::st_transform(4326)
+            sf::st_transform(4326) %>%
+            dplyr::arrange(fip_code) %>%
+            dplyr::select(-state_code) %>%
+            dplyr::mutate(
+                state_region       = as.integer(state_region),
+                state_division     = as.integer(state_division),
+                feature_code       = as.integer(feature_code),
+                tiger_class        = as.factor(tiger_class),
+                functional_status  = as.factor(functional_status),
+                fip_class          = as.factor(fip_class),
+                combined_area_code = as.integer(combined_area_code)
+            )
 
-zcta_query <- "
-SELECT
-    ZCTA5CE20 AS zip_code
-FROM
-    tl_2021_us_zcta520
-"
+.lookup_fips   <- as.integer(tbl_fips$fip_code)
+.metadata_fips <- sf::st_drop_geometry(tbl_fips) %>%
+                  dplyr::select(-fip_code)
 
-tbl_zip <-
-    sf::st_read(tiger_vrt, query = zcta_query, quiet = TRUE) %>%
-    sf::st_transform(4326)
+.geometry_fips <- tbl_fips %>%
+                  rmapshaper::ms_simplify(
+                      keep = 0.05,
+                      sys = TRUE,
+                      explode = TRUE,
+                      keep_shapes = TRUE
+                  ) %>%
+                  dplyr::group_by(fip_code) %>%
+                  dplyr::mutate(geometry = sf::st_combine(geometry)) %>%
+                  dplyr::ungroup() %>%
+                  dplyr::distinct(fip_code, .keep_all = TRUE) %>%
+                  dplyr::arrange(fip_code)
 
-# Save transformed data to internal tables ====================================
-predicate_zip <- function(x, y) {
-    indices <- list()
-    gint   <- sf::st_intersects(x, y)
-    gtouch <- sf::st_touches(x, y)
-
-    iter <- length(gint)
-
-    lapply(
-        seq_len(iter),
-        function(i) {
-            indices[[i]] <<-
-                gint[[i]][!gint[[i]] %in% gtouch[[i]]]
-        }
-    )
-
-    attr(indices, "predicate") <- "intersects & !touches"
-    attr(indices, "region.id") <- attr(gint, "region.id")
-    attr(indices, "ncol")      <- attr(gint, "ncol")
-    class(indices)             <- c("sgbp", "list")
-
-    indices
+if (!all(as.integer(.geometry_fips$fip_code) == .lookup_fips)) {
+    stop("Geometry isn't indexed correctly")
+} else {
+    .geometry_fips <- sf::st_geometry(.geometry_fips)
 }
 
-tbl_zip  <- tbl_zip %>%
-            sf::st_join(
-                dplyr::filter(dplyr::select(tbl_fips, fip_code), nchar(fip_code) == 5),
-                join = predicate_zip
-            ) %>%
-            dplyr::group_by(zip_code) %>%
-            dplyr::mutate(fip_code = paste(fip_code, collapse = ":")) %>%
-            dplyr::ungroup() %>%
-            unique() %>%
-            rmapshaper::ms_simplify(keep = 0.005, sys = TRUE) %>%
-            as.data.frame()
-
-tbl_geo <- dplyr::select(tbl_fips, fip_code, geometry) %>%
-           rmapshaper::ms_simplify(keep = 0.025, sys = TRUE) %>%
-           as.data.frame()
-
-tbl_fips <- sf::st_drop_geometry(tbl_fips) %>%
-            as.data.frame()
+# Save transformed data to internal tables ====================================
 
 # Export to data
 save(
-    tbl_fips,
-    tbl_geo,
-    tbl_zip,
+    .lookup_fips,
+    .metadata_fips,
+    .geometry_fips,
     file              = "R/sysdata.rda",
     compress          = "xz",
     compression_level = -9,

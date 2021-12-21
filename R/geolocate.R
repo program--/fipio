@@ -63,7 +63,12 @@ coords_to_fips.character <- function(x, y, ...) {
 #' @rdname coords_to_fips
 #' @export
 coords_to_fips.numeric <- function(x, y, ...) {
-    lookup <- tbl_geo[nchar(tbl_geo$fip_code) == 5, ]
+    ind <- nchar(.lookup_fips) == 5
+    lookup <- data.frame(
+        fip_code = .lookup_fips[ind],
+        geometry = .geometry_fips[ind]
+    )
+    rm(ind)
 
     indices <- which(unlist(lapply(
         lookup$geometry,

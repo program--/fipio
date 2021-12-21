@@ -163,25 +163,3 @@ testthat::test_that("fipio geolocates on `sf` classes", {
         geolocate_data$FIPS[indices[1]]
     )
 })
-
-testthat::test_that("fipio matches zip codes to FIPS", {
-    testthat::expect_true(
-        "06099" %in% fipio::zip_to_fips("95380")$`95380`
-    )
-
-    testthat::expect_true(
-        "06099" %in% fipio::zip_to_fips("28401", "95380")$`95380` &
-        "37129" %in% fipio::zip_to_fips("28401", "95380")$`28401`
-    )
-})
-
-testthat::test_that("fipio matches FIPS to zip code", {
-    testthat::expect_true(
-        "95380" %in% fipio::fips_to_zip("06099")$`06099`
-    )
-
-    testthat::expect_true(
-        "95380" %in% fipio::fips_to_zip("37129", "06099")$`06099` &
-        "28401" %in% fipio::fips_to_zip("37129", "06099")$`37129`
-    )
-})

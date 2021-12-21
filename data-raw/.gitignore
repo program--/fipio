@@ -1,2 +1,5 @@
 *_shp/
 *\.gpkg
+*\.gdb
+\.fuse*
+*\.zip

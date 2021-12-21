@@ -86,6 +86,44 @@
 #nocov end
 
 #' @keywords internal
-.index <- function(fips, tbl = tbl_fips) {
-    with(tbl, match(fips, fip_code))
+.index <- function(fips, tbl = .lookup_fips) {
+    match(as.integer(fips), tbl)
+}
+
+
+#' @keywords internal
+.pad0 <- function(x) {
+    sprintf(
+        paste0(
+            "%0",
+            ifelse(nchar(x) < 3, 2, 5),
+            if (is.character(x)) "s" else "d"
+        ),
+        x
+    )
+}
+
+#' @keywords internal
+.pad <- function(x, len) {
+    sprintf(
+        paste0("%0", len, if (is.character(x)) "s" else "d"),
+        x
+    )
+}
+
+#' @keywords internal
+.subint <- function(x, n) {
+    if (n <= 0) {
+        stop("n must be > 0")
+    }
+
+    tmp    <- as.double(x)
+    cutoff <- 10 ^ n
+
+    while (any(abs(tmp) >= cutoff)) {
+        index <- abs(tmp) >= cutoff
+        tmp[index] <- tmp[index] / 10
+    }
+
+    as.integer(trunc(tmp))
 }
