@@ -34,10 +34,16 @@ coords_to_fips.sfc <- function(x, ...) {
 #' @rdname coords_to_fips
 #' @export
 coords_to_fips.sfg <- function(x, ...) {
-    coords_to_fips(x = as.numeric(x)[1],
-                   y = as.numeric(x)[2])
+    coords_to_fips(x = as.numeric(x)[[1]],
+                   y = as.numeric(x)[[2]])
 }
 # nocov end
+
+#' @rdname coords_to_fips
+#' @export
+coords_to_fips.list <- function(x, ...) {
+    coords_to_fips(x = do.call(rbind, x))
+}
 
 #' @rdname coords_to_fips
 #' @export
@@ -63,40 +69,37 @@ coords_to_fips.character <- function(x, y, ...) {
 #' @rdname coords_to_fips
 #' @export
 coords_to_fips.numeric <- function(x, y, ...) {
-    lookup <- geo_[nchar(geo_$fip_code) == 5, ]
+    county_fips     <- nchar(as.character(.lookup_fips)) > 3
+    lookup_fips     <- .lookup_fips[county_fips]
+    lookup_geometry <- .geometry_fips[county_fips]
+    rm(county_fips)
 
-    indices <- which(unlist(lapply(
-        lookup$geometry,
+    intersected <- which(vapply(
+        lookup_geometry,
         FUN = function(g) {
             bb <- .bbox(g)
             any(x >= bb[1] & y >= bb[2] &
                 x <= bb[3] & y <= bb[4])
-        }
-    )))
+        },
+        FUN.VALUE = logical(1),
+        USE.NAMES = FALSE
+    ))
 
-    lookup <- lookup[indices, ]
+    lookup_fips     <- lookup_fips[intersected]
+    lookup_geometry <- lookup_geometry[intersected]
 
-    lookup <- cbind(lookup$fip_code,
-                    index = lapply(lookup$geometry,
-                                   .intersects,
-                                   x = x,
-                                   y = y))
+    ret_index <- vapply(
+        lookup_geometry,
+        FUN = .intersects,
+        FUN.VALUE = numeric(1),
+        x = x,
+        y = y
+    )
 
-    lookup <- lookup[lengths(lookup)[, 2] > 0, ]
+    ret_value <- .pad0(lookup_fips)[!is.na(ret_index)]
+    ret_index <- ret_index[!is.na(ret_index)]
 
-    if (nrow(as.data.frame(lookup)) == 1) {
-        lookup[[1]]
-    } else {
-        tmp        <- lookup[, 2]
-        names(tmp) <- lookup[, 1]
-        tmp        <- unlist(tmp)
-        names(tmp) <- substr(names(tmp), 1, 5)
+    rm(lookup_fips, lookup_geometry)
 
-        lookup <- data.frame(
-            fips  = names(tmp),
-            index = unname(tmp)
-        )
-
-        lookup[order(lookup$index), ]$fips
-    }
+    ret_value[order(ret_index)]
 }

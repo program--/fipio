@@ -1,7 +1,7 @@
 fip_codes    <- c("46093", "30099", "72015", "29229", "01083")
 state_abbrs  <- c("SD", "MT", "PR", "MO", "AL")
 state_names  <- c("South Dakota", "Montana", "Puerto Rico", "Missouri", "Alabama")
-county_names <- c("Meade", "Teton", "Arroyo Municipio", "Wright", "Limestone")
+county_names <- c("Meade", "Teton", "Arroyo", "Wright", "Limestone")
 
 # Vectorized test
 local_fipio(
@@ -16,7 +16,7 @@ local_fipio(
     fip_code    = c(fip_codes[1], substr(fip_codes[2], 1, 2)),
     state_abbr  = state_abbrs[1:2],
     state_name  = state_names[1:2],
-    county_name = c(county_names[1], NA)
+    county_name = c(county_names[1], state_names[2])
 )
 
 # Individual tests
@@ -53,17 +53,54 @@ testthat::test_that("as_fips edge cases", {
     testthat::expect_error(fipio::as_fips())
     testthat::expect_error(fipio::as_fips(""))
     testthat::expect_error(fipio::as_fips(NULL))
-})
 
-# Test error
-testthat::test_that("fipio returns an error if `sfheaders` is not installed", {
-    mockery::stub(fips_geometry, ".has_sfheaders", FALSE)
-    testthat::expect_error(fips_geometry(NA))
+    testthat::expect_equal(
+        fipio::as_fips(state = "American Samoa", county = "all"),
+        c("60010", "60020", "60030", "60040", "60050")
+    )
+
+    testthat::expect_equal(
+        fipio::fips_state(fipio::as_fips("conus")),
+        sort(
+            c(state.name[!state.abb %in% c("AK", "HI")], "District of Columbia")
+        )
+    )
+
+    testthat::expect_equal(
+        fipio::as_fips(c("conus", "territories")),
+        sort(c(
+            fipio::as_fips(state.name[!state.abb %in% c("AK", "HI")]),
+            "11", "60", "66", "69", "72", "78"
+        ))
+    )
+
+    testthat::expect_equal(
+        fipio::as_fips("territories"),
+        c("60", "66", "69", "72", "78")
+    )
+
+    testthat::expect_equal(
+        fipio::as_fips("us-territories"),
+        c("60", "66", "69", "72", "78")
+    )
+
+    testthat::expect_error(fipio::as_fips(c("all", "NC")))
+
+    testthat::expect_equal(
+        fipio::as_fips("all"),
+        sort(c(fipio::as_fips(state.name), "11"))
+    )
+
+    testthat::expect_equal(
+        fipio::as_fips(c("CA", "RI"), c("Alameda", "all")),
+        c("06001", "44001", "44003", "44005", "44007", "44009")
+    )
 })
 
 # Test matching function
-# Coverage for matchfn(), .has_fastmatch(), .onLoad()
+# Coverage for match(), .has_fastmatch(), .onLoad()
 testthat::test_that("`fmatch` is assigned to `match` if it is installed", {
+    testthat::skip_if(!requireNamespace("mockery", quietly = TRUE))
     m <- mockery::mock(FALSE, TRUE)
     mockery::stub(expect_match_assignment, ".has_fastmatch", m)
 
@@ -73,23 +110,27 @@ testthat::test_that("`fmatch` is assigned to `match` if it is installed", {
 
 # Test geolocation function
 testthat::test_that("fipio geolocates on `base` classes", {
-    testthat::skip_if(R.Version()$major != "4" & R.Version()$minor != "1.1")
+    testthat::skip_if(
+        as.numeric(R.Version()$major) < 3 &
+        as.numeric(R.Version()$minor) < 5
+    )
+
     indices <- sample(seq_len(nrow(geolocate_data)), 30)
 
     # Single Numeric
     testthat::expect_identical(
         fipio::coords_to_fips(
-            x = geolocate_data$X[indices[1]],
-            y = geolocate_data$Y[indices[1]]
+            x = geolocate_data[[2]][indices[1]],
+            y = geolocate_data[[3]][indices[1]]
         ),
-        geolocate_data$FIPS[indices[1]]
+        geolocate_data[[1]][indices[1]]
     )
 
     # Single Character
     testthat::expect_identical(
         fipio::coords_to_fips(
-            x = as.character(geolocate_data$X[indices[1]]),
-            y = as.character(geolocate_data$Y[indices[1]])
+            x = as.character(geolocate_data[[2]][indices[1]]),
+            y = as.character(geolocate_data[[3]][indices[1]])
         ),
         geolocate_data$FIPS[indices[1]]
     )
@@ -97,8 +138,8 @@ testthat::test_that("fipio geolocates on `base` classes", {
     # Vectorized Numeric
     testthat::expect_identical(
         fipio::coords_to_fips(
-            x = geolocate_data$X[indices],
-            y = geolocate_data$Y[indices]
+            x = geolocate_data[[2]][indices],
+            y = geolocate_data[[3]][indices]
         ),
         geolocate_data$FIPS[indices]
     )
@@ -106,8 +147,8 @@ testthat::test_that("fipio geolocates on `base` classes", {
     # Vectorized Character
     testthat::expect_identical(
         fipio::coords_to_fips(
-            x = as.character(geolocate_data$X[indices]),
-            y = as.character(geolocate_data$Y[indices])
+            x = as.character(geolocate_data[[2]][indices]),
+            y = as.character(geolocate_data[[3]][indices])
         ),
         geolocate_data$FIPS[indices]
     )
@@ -115,10 +156,13 @@ testthat::test_that("fipio geolocates on `base` classes", {
     # data.frame
     testthat::expect_identical(
         fipio::coords_to_fips(
-            x = as.data.frame(geolocate_data[indices, 2:3]),
+            x = data.frame(
+                X = geolocate_data[[2]][indices],
+                Y = geolocate_data[[3]][indices]
+            ),
             coords = c("X", "Y")
         ),
-        geolocate_data$FIPS[indices]
+        geolocate_data[[1]][indices]
     )
 
     # matrix
@@ -137,8 +181,8 @@ testthat::test_that("fipio geolocates on `base` classes", {
 })
 
 testthat::test_that("fipio geolocates on `sf` classes", {
-    testthat::skip_if_not_installed("sf")
-    testthat::skip_if_not_installed("sfheaders")
+    # testthat::skip_if_not_installed("sf")
+    # testthat::skip_if_not_installed("sfheaders")
     testthat::skip_on_cran()
 
     indices <- sample(seq_len(nrow(geolocate_data)), 10)

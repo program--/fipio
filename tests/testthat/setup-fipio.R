@@ -25,17 +25,26 @@ local_fipio <- function(fip_code, state_abbr, state_name, county_name) {
         expect_abbr(fip_code, state_abbr)
         expect_state(state_code, state_name)
         expect_state(fip_code, state_name)
-        expect_county(fip_code, county_name)
+        expect_county(
+            fip_code,
+            ifelse(
+                nchar(fip_code) == 2,
+                NA,
+                county_name
+            )
+        )
         expect_metadata(state_code, state_name)
-        expect_metadata(fip_code, county_name)
+        expect_metadata(
+            fip_code,
+            ifelse(
+                nchar(fip_code) == 2,
+                state_name,
+                county_name
+            )
+        )
     })
 
     testthat::test_that(descs[2], {
-        testthat::skip_if_not(
-            requireNamespace("sfheaders", quietly = TRUE),
-            message = "`sfheaders` is not available."
-        )
-
         expect_geometry_class(fip_code)
     })
 
@@ -66,22 +75,16 @@ expect_metadata <- function(fip, expected) {
 
     testthat::expect_s3_class(meta, "data.frame")
 
-    if (all(nchar(fip) == 2)) {
-        exp_names <- c("state_code", "state_abbr", "state_name", "fip_code")
-
-        testthat::expect_equal(meta$state_name, expected)
-    } else {
-        exp_names <- c("state_code", "county_code", "fip_code",
-                    "state_abbr", "state_name", "county_name")
-
-        testthat::expect_equal(meta$county_name, expected)
-    }
+    testthat::expect_equal(meta$name, expected)
+    exp_names <- c(
+        "state_region", "state_division", "feature_code", "state_name",
+        "state_abbr", "name", "fip_class", "tiger_class", "combined_area_code",
+        "metropolitan_area_code", "functional_status", "land_area", "water_area",
+        "fip_code"
+    )
 
     testthat::expect_named(meta, exp_names)
-    testthat::expect_equal(
-        ifelse(is.na(meta$fip_code), meta$state_code, meta$fip_code),
-        fip
-    )
+    testthat::expect_equal(meta$fip_code, fip)
 }
 
 expect_geometry_class <- function(fip) {

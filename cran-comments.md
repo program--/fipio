@@ -4,8 +4,8 @@ This is a resubmission. This version includes new features. See the NEWS.md file
 
 ## Test environments
 
-* GitHub Actions (ubuntu-16.04): devel, release, oldrel, 3.5, 3.4, 3.3
-* GitHub Actions (windows): release, oldrel
+* GitHub Actions (ubuntu-18.04): devel, release, oldrel, 3.6, 3.5
+* GitHub Actions (windows): release, 3.6
 * GitHub Actions (macOS): release
 * win-builder: devel
 

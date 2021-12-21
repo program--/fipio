@@ -1,18 +1,16 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# fipio
+# fipio <a href="https://github.com/UFOKN/fipio"><img src="man/figures/logo.png" align="right" height="200"/></a>
 
 <!-- badges: start -->
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/fipio)](https://CRAN.R-project.org/package=fipio)
-[![Devel
-Version](https://img.shields.io/badge/devel%20version-1.0.0.9000-blue.svg)](https://github.com/program--/fipio)
 [![CRAN
 downloads](https://cranlogs.r-pkg.org/badges/fipio)](https://CRAN.R-project.org/package=fipio)
-[![codecov](https://codecov.io/gh/program--/fipio/branch/master/graph/badge.svg?token=1ODDHARQM1)](https://codecov.io/gh/program--/fipio)
-[![R-CMD-check](https://github.com/program--/fipio/workflows/R-CMD-check/badge.svg)](https://github.com/program--/fipio/actions)
+[![codecov](https://codecov.io/gh/UFOKN/fipio/branch/master/graph/badge.svg?token=1ODDHARQM1)](https://codecov.io/gh/UFOKN/fipio)
+[![R-CMD-check](https://github.com/UFOKN/fipio/workflows/R-CMD-check/badge.svg)](https://github.com/UFOKN/fipio/actions)
 [![MIT
 License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 <!-- badges: end -->
@@ -23,7 +21,7 @@ information about a US FIPS code.
 ## Installation
 
 You can install the released version of `fipio` from
-[CRAN](https://CRAN.R-project.org) with:
+[CRAN](https://cran.r-project.org/package=fipio) with:
 
 ``` r
 install.packages("fipio")
@@ -33,10 +31,10 @@ or the development version with `pak` or `remotes`:
 
 ``` r
 # Using `pak`
-pak::pkg_install("program--/fipio")
+pak::pkg_install("UFOKN/fipio")
 
 # Using `remotes`
-remotes::install_github("program--/fipio")
+remotes::install_github("UFOKN/fipio")
 ```
 
 ## Usage
@@ -65,13 +63,21 @@ fipio::fips_county(fip)
 
 # It'd be nice to have this all in a data.frame...
 fipio::fips_metadata(fip)
-#>   state_code county_code fip_code state_abbr     state_name county_name
-#> 1         37         129    37129         NC North Carolina New Hanover
+#>   state_region state_division feature_code     state_name state_abbr
+#> 1            3              5      1026329 North Carolina         NC
+#>          name fip_class tiger_class combined_area_code metropolitan_area_code
+#> 1 New Hanover        H1       G4020                 NA                   <NA>
+#>   functional_status land_area water_area fip_code
+#> 1                 A 497937486  353803887    37129
 
 # And the metadata for the state by itself...
 fipio::fips_metadata("37")
-#>   state_code state_abbr     state_name fip_code
-#> 1         37         NC North Carolina       37
+#>   state_region state_division feature_code     state_name state_abbr
+#> 1            3              5      1027616 North Carolina         NC
+#>             name fip_class tiger_class combined_area_code
+#> 1 North Carolina      <NA>       G4000                 NA
+#>   metropolitan_area_code functional_status    land_area  water_area fip_code
+#> 1                   <NA>                 A 125933327733 13456093195       37
 ```
 
 ### With `sf`
@@ -86,16 +92,20 @@ fipio::fips_geometry(fip)
 #> Geometry set for 1 feature 
 #> Geometry type: MULTIPOLYGON
 #> Dimension:     XY
-#> Bounding box:  xmin: -78.02992 ymin: 34.03824 xmax: -77.71351 ymax: 34.38903
+#> Bounding box:  xmin: -78.02992 ymin: 33.7868 xmax: -77.67528 ymax: 34.38929
 #> Geodetic CRS:  WGS 84
-#> MULTIPOLYGON (((-78.02992 34.33177, -77.82268 3...
+#> MULTIPOLYGON (((-77.89701 33.7868, -77.8952 33....
 
 # What if I need it with my other metadata?
 fipio::fips_metadata(fip, geometry = TRUE)
-#>   state_code county_code fip_code state_abbr     state_name county_name
-#> 1         37         129    37129         NC North Carolina New Hanover
-#>                         geometry
-#> 1 MULTIPOLYGON (((-78.02992 3...
+#>   state_region state_division feature_code     state_name state_abbr
+#> 1            3              5      1026329 North Carolina         NC
+#>          name fip_class tiger_class combined_area_code metropolitan_area_code
+#> 1 New Hanover        H1       G4020                 NA                   <NA>
+#>   functional_status land_area water_area                       geometry
+#> 1                 A 497937486  353803887 MULTIPOLYGON (((-77.89701 3...
+#>   fip_code
+#> 1    37129
 ```
 
 ### Vectorized
@@ -116,26 +126,34 @@ fipio::fips_county(fips)
 #> [1] "New Hanover" "Bristol"     "Dawson"
 
 fipio::fips_metadata(fips)
-#>   state_code county_code fip_code state_abbr     state_name county_name
-#> 1         37         129    37129         NC North Carolina New Hanover
-#> 2         44         001    44001         RI   Rhode Island     Bristol
-#> 3         48         115    48115         TX          Texas      Dawson
+#>   state_region state_division feature_code     state_name state_abbr
+#> 1            3              5      1026329 North Carolina         NC
+#> 2            1              1      1219777   Rhode Island         RI
+#> 3            3              7      1383843          Texas         TX
+#>          name fip_class tiger_class combined_area_code metropolitan_area_code
+#> 1 New Hanover        H1       G4020                 NA                   <NA>
+#> 2     Bristol        H4       G4020                148                   <NA>
+#> 3      Dawson        H1       G4020                 NA                   <NA>
+#>   functional_status  land_area water_area fip_code
+#> 1                 A  497937486  353803887    37129
+#> 2                 N   62500772   53359134    44001
+#> 3                 A 2331781561    4720730    48115
 
 fipio::fips_geometry(fips)
 #> Geometry set for 3 features 
 #> Geometry type: MULTIPOLYGON
 #> Dimension:     XY
-#> Bounding box:  xmin: -102.2085 ymin: 32.52327 xmax: -71.2086 ymax: 41.77726
+#> Bounding box:  xmin: -102.2085 ymin: 32.52327 xmax: -71.20837 ymax: 41.7762
 #> Geodetic CRS:  WGS 84
-#> MULTIPOLYGON (((-78.02992 34.33177, -77.82268 3...
-#> MULTIPOLYGON (((-71.36521 41.73565, -71.3174 41...
-#> MULTIPOLYGON (((-102.2085 32.95896, -102.0762 3...
+#> MULTIPOLYGON (((-77.89701 33.7868, -77.8952 33....
+#> MULTIPOLYGON (((-71.33097 41.68696, -71.32372 4...
+#> MULTIPOLYGON (((-102.2027 32.52327, -102.1201 3...
 ```
 
-### Reverse Geolocate Coordinates to FIPS (`fipio` \>= 1.0.0.9000)
+### Reverse Geolocate Coordinates to FIPS
 
 `fipio` contains the ability to locate the FIPS code(s) for a set of
-coordinates (in `WGS84`/`EPSG: 4326`):
+coordinates (in `WGS84`/`EPSG:4326`):
 
 ``` r
 # With a single set of coordinates

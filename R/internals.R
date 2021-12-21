@@ -1,8 +1,3 @@
-#' @keywords internal
-.has_sfheaders <- function() {
-    requireNamespace("sfheaders", quietly = TRUE)
-}
-
 #nocov start
 #' @keywords internal
 .has_fastmatch <- function() {
@@ -13,7 +8,6 @@
 #' @keywords internal
 .bbox <- function(geometry) {
     geometry <- .to_matrix(geometry)
-
     c(xmin = min(geometry[, 1]),
       ymin = min(geometry[, 2]),
       xmax = max(geometry[, 1]),
@@ -50,7 +44,13 @@
 
     # indices of the point(s) that intersect with `geometry`
     # i.e. if below = 6, then (x[6], y[6]) intersects `geometry`.
-    as.numeric(names(which(points_per_side %% 2 == 1)))
+    ret <- as.numeric(names(which(points_per_side %% 2 == 1)))
+
+    if (length(ret) == 0) {
+        NA_real_
+    } else {
+        ret
+    }
 }
 
 #' Check if a point intersects with a side of a polygon
@@ -82,5 +82,56 @@
                    recursive = FALSE)
         )
     }
+}
+
+#' @keywords internal
+.index <- function(fips, tbl = .lookup_fips) {
+    match(as.integer(fips), tbl)
+}
+
+
+#' @keywords internal
+.pad0 <- function(x) {
+    ifelse(
+        is.na(x),
+        as.character(x),
+        sprintf(
+            paste0(
+                "%0",
+                ifelse(nchar(as.character(x)) < 3, 2, 5),
+                ifelse(is.character(x), "s", "d")
+            ),
+            x
+        )
+    )
+}
+
+#' @keywords internal
+.pad <- function(x, len) {
+    ifelse(
+        is.na(x),
+        as.character(x),
+        sprintf(
+            paste0("%0", len, ifelse(is.character(x), "s", "d")),
+            x
+        )
+    )
+}
+
+#' @keywords internal
+.subint <- function(x, n) {
+    if (n <= 0) {
+        stop("n must be > 0")
+    }
+
+    tmp    <- as.double(x)
+    cutoff <- 10 ^ n
+
+    while (any(abs(tmp) >= cutoff)) {
+        index <- abs(tmp) >= cutoff
+        tmp[index] <- tmp[index] / 10
+    }
+
+    as.integer(trunc(tmp))
 }
 #nocov end

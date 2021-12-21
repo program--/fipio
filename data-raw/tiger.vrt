@@ -1,0 +1,11 @@
+<OGRVRTDataSource>
+    <OGRVRTLayer name="tl_2021_us_county">
+        <SrcDataSource>/vsizip/vsicurl/https://www2.census.gov/geo/tiger/TIGER2021/COUNTY/tl_2021_us_county.zip/tl_2021_us_county.shp</SrcDataSource>
+    </OGRVRTLayer>
+    <OGRVRTLayer name="tl_2021_us_state">
+        <SrcDataSource>/vsizip/vsicurl/https://www2.census.gov/geo/tiger/TIGER2021/STATE/tl_2021_us_state.zip/tl_2021_us_state.shp</SrcDataSource>
+    </OGRVRTLayer>
+    <OGRVRTLayer name="tl_2021_us_zcta520">
+        <SrcDataSource>/vsizip/vsicurl/https://www2.census.gov/geo/tiger/TIGER2021/ZCTA520/tl_2021_us_zcta520.zip/tl_2021_us_zcta520.shp</SrcDataSource>
+    </OGRVRTLayer>
+</OGRVRTDataSource>

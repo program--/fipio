@@ -13,14 +13,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-# fipio
+# fipio <a href="https://github.com/UFOKN/fipio"><img src="man/figures/logo.png" align="right" height="200"/></a>
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/fipio)](https://CRAN.R-project.org/package=fipio)
-[![Devel Version](https://img.shields.io/badge/devel%20version-1.0.0.9000-blue.svg)](https://github.com/program--/fipio)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/fipio)](https://CRAN.R-project.org/package=fipio)
-[![codecov](https://codecov.io/gh/program--/fipio/branch/master/graph/badge.svg?token=1ODDHARQM1)](https://codecov.io/gh/program--/fipio)
-[![R-CMD-check](https://github.com/program--/fipio/workflows/R-CMD-check/badge.svg)](https://github.com/program--/fipio/actions)
+[![codecov](https://codecov.io/gh/UFOKN/fipio/branch/master/graph/badge.svg?token=1ODDHARQM1)](https://codecov.io/gh/UFOKN/fipio)
+[![R-CMD-check](https://github.com/UFOKN/fipio/workflows/R-CMD-check/badge.svg)](https://github.com/UFOKN/fipio/actions)
 [![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 <!-- badges: end -->
 
@@ -28,7 +27,7 @@ knitr::opts_chunk$set(
 
 ## Installation
 
-You can install the released version of `fipio` from [CRAN](https://CRAN.R-project.org) with:
+You can install the released version of `fipio` from [CRAN](https://cran.r-project.org/package=fipio) with:
 
 ``` r
 install.packages("fipio")
@@ -37,10 +36,10 @@ install.packages("fipio")
 or the development version with `pak` or `remotes`:
 ``` r
 # Using `pak`
-pak::pkg_install("program--/fipio")
+pak::pkg_install("UFOKN/fipio")
 
 # Using `remotes`
-remotes::install_github("program--/fipio")
+remotes::install_github("UFOKN/fipio")
 ```
 
 ## Usage
@@ -102,8 +101,8 @@ fipio::fips_metadata(fips)
 fipio::fips_geometry(fips)
 ```
 
-### Reverse Geolocate Coordinates to FIPS (`fipio` >= 1.0.0.9000)
-`fipio` contains the ability to locate the FIPS code(s) for a set of coordinates (in `WGS84`/`EPSG: 4326`):
+### Reverse Geolocate Coordinates to FIPS
+`fipio` contains the ability to locate the FIPS code(s) for a set of coordinates (in `WGS84`/`EPSG:4326`):
 ```{r}
 # With a single set of coordinates
 fipio::coords_to_fips(x = -119.8696, y = 34.4184)

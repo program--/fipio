@@ -2,6 +2,7 @@
 
 S3method(coords_to_fips,character)
 S3method(coords_to_fips,data.frame)
+S3method(coords_to_fips,list)
 S3method(coords_to_fips,matrix)
 S3method(coords_to_fips,numeric)
 S3method(coords_to_fips,sf)
