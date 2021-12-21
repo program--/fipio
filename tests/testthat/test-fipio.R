@@ -67,6 +67,14 @@ testthat::test_that("as_fips edge cases", {
     )
 
     testthat::expect_equal(
+        fipio::as_fips(c("conus", "territories")),
+        sort(c(
+            fipio::as_fips(state.name[!state.abb %in% c("AK", "HI")]),
+            "11", "60", "66", "69", "72", "78"
+        ))
+    )
+
+    testthat::expect_equal(
         fipio::as_fips("territories"),
         c("60", "66", "69", "72", "78")
     )
@@ -74,6 +82,18 @@ testthat::test_that("as_fips edge cases", {
     testthat::expect_equal(
         fipio::as_fips("us-territories"),
         c("60", "66", "69", "72", "78")
+    )
+
+    testthat::expect_error(fipio::as_fips(c("all", "NC")))
+
+    testthat::expect_equal(
+        fipio::as_fips("all"),
+        sort(c(fipio::as_fips(state.name), "11"))
+    )
+
+    testthat::expect_equal(
+        fipio::as_fips(c("CA", "RI"), c("Alameda", "all")),
+        c("06001", "44001", "44003", "44005", "44007", "44009")
     )
 })
 

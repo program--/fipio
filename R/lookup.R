@@ -93,7 +93,7 @@ as_fips <- function(state, county = NULL) {
                 # Return all fip codes in every state
                 ret <- .lookup_fips[c_ind]
             } else {
-                ret <- unlist(mapply(as_fips, state, county))
+                ret <- unlist(mapply(as_fips, state, county), use.names = FALSE)
             }
         } else {
             abr <- with(.metadata_fips, state_abbr[match(ret, .lookup_fips)])

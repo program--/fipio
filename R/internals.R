@@ -83,7 +83,6 @@
         )
     }
 }
-#nocov end
 
 #' @keywords internal
 .index <- function(fips, tbl = .lookup_fips) {
@@ -135,3 +134,4 @@
 
     as.integer(trunc(tmp))
 }
+#nocov end
