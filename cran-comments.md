@@ -2,6 +2,8 @@
 
 This is a resubmission. This version includes new features. See the NEWS.md file for details.
 
+Additionally, I have fixed redirected URLs in the README.
+
 ## Test environments
 
 * GitHub Actions (ubuntu-18.04): devel, release, oldrel, 3.6, 3.5

@@ -9,7 +9,7 @@
 status](https://www.r-pkg.org/badges/version/fipio)](https://CRAN.R-project.org/package=fipio)
 [![CRAN
 downloads](https://cranlogs.r-pkg.org/badges/fipio)](https://CRAN.R-project.org/package=fipio)
-[![codecov](https://codecov.io/gh/UFOKN/fipio/branch/master/graph/badge.svg?token=1ODDHARQM1)](https://codecov.io/gh/UFOKN/fipio)
+[![codecov](https://app.codecov.io/gh/UFOKN/fipio/branch/master/graph/badge.svg?token=1ODDHARQM1)](https://app.codecov.io/gh/UFOKN/fipio)
 [![R-CMD-check](https://github.com/UFOKN/fipio/workflows/R-CMD-check/badge.svg)](https://github.com/UFOKN/fipio/actions)
 [![MIT
 License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
