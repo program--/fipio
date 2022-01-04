@@ -2,7 +2,7 @@
 
 This is a resubmission. This version includes new features. See the NEWS.md file for details.
 
-Additionally, I have fixed redirected URLs in the README.
+Additionally, I have fixed the redirected URLs in the README.
 
 ## Test environments
 
