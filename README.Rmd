@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# fipio <a href="https://github.com/UFOKN/fipio"><img src="man/figures/logo.png" align="right" height="200"/></a>
+# fipio <a href="https://github.com/UFOKN/fipio"><img src="man/figures/logo.png" align="right" width="25%"/></a>
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/fipio)](https://CRAN.R-project.org/package=fipio)
