@@ -103,6 +103,10 @@ as_fips <- function(state, county = NULL) {
                 match(county, tolower(counties))
             ]
 
+            if(length(ret) != length(county_codes)){
+                ret = rep(ret, length(county_codes))
+            }
+
             if (all(is.na(county_codes))) {
                 repl <- TRUE
             } else {
