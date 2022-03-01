@@ -50,6 +50,10 @@ testthat::test_that("as_fips edge cases", {
 
     expect_fips("CA", "fakecounty", as.character(NA))
 
+    expect_fips("CA",
+                c("San Luis Obispo", "Santa Barbara",   "Ventura"),
+                c("06079", "06083", "06111"))
+
     testthat::expect_error(fipio::as_fips())
     testthat::expect_error(fipio::as_fips(""))
     testthat::expect_error(fipio::as_fips(NULL))
