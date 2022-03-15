@@ -1,5 +1,6 @@
-# fipio 1.1.0.9000
+# fipio 1.1.1.9000
 
+# fipio 1.1.1
 
 - Added [Mike Johnson](https://github.com/mikejohnson51) to `DESCRIPTION`.
 - Fixed `coords_to_fips()` throwing error in some edge cases ([#11](https://github.com/UFOKN/fipio/issues/11)).
