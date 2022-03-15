@@ -4,10 +4,19 @@ home:
 
 url: https://fipio.justinsingh.me
 
+authors:
+  Urban Flooding Open Knowledge Network (UF-OKN):
+    href: https://ufokn.com
+    html: <img src="https://ufokn.com/images/logo.svg" height="75" width="75"/>
+  footer:
+    roles: [aut, cre]
+    text: Developed by
+  sidebar:
+    roles: [aut, cre, fnd]
+
 template:
-  params:
-    bootswatch: paper
-  
+  bootstrap: 5
+
 reference:
   - title: FIPS Lookup
     contents:

@@ -74,26 +74,25 @@ coords_to_fips.numeric <- function(x, y, ...) {
     lookup_geometry <- .geometry_fips[county_fips]
     rm(county_fips)
 
-    intersected <- which(vapply(
+    intersected <- which(sapply(
         lookup_geometry,
         FUN = function(g) {
             bb <- .bbox(g)
             any(x >= bb[1] & y >= bb[2] &
                 x <= bb[3] & y <= bb[4])
         },
-        FUN.VALUE = logical(1),
         USE.NAMES = FALSE
     ))
 
     lookup_fips     <- lookup_fips[intersected]
     lookup_geometry <- lookup_geometry[intersected]
 
-    ret_index <- vapply(
+    ret_index <- sapply(
         lookup_geometry,
         FUN = .intersects,
-        FUN.VALUE = numeric(1),
         x = x,
-        y = y
+        y = y,
+        USE.NAMES = FALSE
     )
 
     ret_value <- .pad0(lookup_fips)[!is.na(ret_index)]

@@ -79,7 +79,7 @@ as_fips <- function(state, county = NULL) {
         y <- match(state, abr)
         rm(nms, abr)
 
-        x[is.na(x)] <- y[!is.na(y)]
+        x[is.na(x) & !is.na(y)] <- y[is.na(x) & !is.na(y)]
         ret <- ret[x]
         rm(x, y)
     }
@@ -97,14 +97,22 @@ as_fips <- function(state, county = NULL) {
             }
         } else {
             abr <- with(.metadata_fips, state_abbr[match(ret, .lookup_fips)])
-            county   <- trimws(gsub("county", "", county))
-            counties <- with(.metadata_fips, name[c_ind])
+            county   <- trimws(gsub("county", "", county)) # county names
+            counties <- with(.metadata_fips, name[c_ind]) # county fips codes
+
+            # matched county codes
             county_codes <- .lookup_fips[c_ind][
                 match(county, tolower(counties))
             ]
 
-            if(length(ret) != length(county_codes)){
-                ret = rep(ret, length(county_codes))
+            if (length(ret) != length(county_codes)) {
+                # max() call solves edge case `state = c("CA", "NC")`,
+                # `county = "Stanislaus"` where only c("06099") is returned.
+                ret <- rep(ret, length.out = max(
+                    length(county_codes),
+                    length(state),
+                    length(county)
+                ))
             }
 
             if (all(is.na(county_codes))) {
@@ -112,15 +120,23 @@ as_fips <- function(state, county = NULL) {
             } else {
                 repl <- !is.na(c(
                     county_codes,
-                    rep(NA, length(ret) - length(county_codes))
+                    rep(NA, abs(length(ret) - length(county_codes)))
                 ))
             }
 
             ret[repl] <- county_codes[repl]
+
+            # solves returning NA for nonexistant counties
+            if (length(!is.na(county)) > length(state) &
+                length(is.na(county)) != 0) {
+                ret[!repl] <- NA
+            }
         }
     }
 
-    .pad0(ret)
+    # added as.integer() to force left 0 padding,
+    # doesn't seem to work with strings
+    .pad0(as.integer(ret))
 }
 
 #' @title Get the state abbreviation for a FIPS code

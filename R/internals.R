@@ -92,30 +92,32 @@
 
 #' @keywords internal
 .pad0 <- function(x) {
-    ifelse(
-        is.na(x),
-        as.character(x),
-        sprintf(
-            paste0(
+    sapply(x, function(y) {
+        if (is.na(y)) {
+            as.character(y)
+        } else {
+            sprintf(paste0(
                 "%0",
-                ifelse(nchar(as.character(x)) < 3, 2, 5),
-                ifelse(is.character(x), "s", "d")
-            ),
-            x
-        )
-    )
+                if (nchar(as.character(y)) < 3) 2 else 5,
+                if (is.character(y)) "s" else "d"
+            ), y)
+        }
+    }, USE.NAMES = FALSE)
 }
 
 #' @keywords internal
 .pad <- function(x, len) {
-    ifelse(
-        is.na(x),
-        as.character(x),
-        sprintf(
-            paste0("%0", len, ifelse(is.character(x), "s", "d")),
-            x
-        )
-    )
+    sapply(x, function(y) {
+        if (is.na(y)) {
+            as.character(y)
+        } else {
+            sprintf(paste0(
+                "%0",
+                len,
+                if (is.character(y)) "s" else "d"
+            ), y)
+        }
+    }, USE.NAMES = FALSE)
 }
 
 #' @keywords internal

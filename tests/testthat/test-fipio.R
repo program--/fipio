@@ -209,3 +209,33 @@ testthat::test_that("fipio geolocates on `sf` classes", {
         geolocate_data$FIPS[indices[1]]
     )
 })
+
+testthat::test_that("fipio returns NA for nonexistant states/counties", {
+    testthat::expect_equal(
+        fipio::as_fips(state = "FAKE"),
+        NA_character_
+    )
+
+    testthat::expect_equal(
+        fipio::as_fips(state = c("CA", "FAKE", "north carolina")),
+        c("06", NA_character_, "37")
+    )
+
+    testthat::expect_equal(
+        fipio::as_fips(state = "FAKE", county = "FAKE"),
+        NA_character_
+    )
+
+    testthat::expect_equal(
+        fipio::as_fips(state = "CA", county = c("FAKE", "Alameda")),
+        c(NA_character_, "06001")
+    )
+
+    testthat::expect_equal(
+        fipio::as_fips(
+            state = c("RI", "CA"),
+            county = c("bristol", "FAKE", "Alameda")
+        ),
+        c("44001", NA_character_, "06001")
+    )
+})
