@@ -1,3 +1,11 @@
+# fipio 1.1.0.9000
+
+
+- Added [Mike Johnson](https://github.com/mikejohnson51) to `DESCRIPTION`.
+- Fixed `coords_to_fips()` throwing error in some edge cases ([#11](https://github.com/UFOKN/fipio/issues/11)).
+- Fixed `as_fips()` throwing error for unknown states. ([#10](https://github.com/UFOKN/fipio/issues/10)).
+- Fixed `as_fips()` edge case throwing error ([#13](https://github.com/UFOKN/fipio/pull/13)).
+
 # fipio 1.1.0
 
 * **`fipio` now depends on R >= 3.5.0 due to using `.rds` and version 3 `.rda` files.**
