@@ -1,8 +1,6 @@
 ## Resubmission
 
-This is a resubmission. This version includes new features. See the NEWS.md file for details.
-
-Additionally, I have fixed the redirected URLs in the README.
+This is a resubmission. This version addresses bugfixes. See the NEWS.md file for details.
 
 ## Test environments
 
