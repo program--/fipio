@@ -1,0 +1,16 @@
+<OGRVRTDataSource
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/OSGeo/gdal/master/data/ogrvrt.xsd"
+>
+
+    <OGRVRTLayer name="counties">
+        <SrcDataSource>${_SCRIPT_DIR}/tiger/county/tl_2023_us_county.shp</SrcDataSource>
+        <SrcLayer>tl_2023_us_county</SrcLayer>
+    </OGRVRTLayer>
+
+    <OGRVRTLayer name="states">
+        <SrcDataSource>${_SCRIPT_DIR}/tiger/state/tl_2023_us_state.shp</SrcDataSource>
+        <SrcLayer>tl_2023_us_state</SrcLayer>
+    </OGRVRTLayer>
+    
+</OGRVRTDataSource>

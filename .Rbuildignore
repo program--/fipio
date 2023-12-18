@@ -1,6 +1,7 @@
 ^LICENSE\.md$
 ^codecov\.yml$
 ^\.github$
+^\.gitmodules$
 ^README\.Rmd$
 ^cran-comments\.md$
 ^_pkgdown\.yml$
@@ -11,3 +12,5 @@
 ^CRAN-RELEASE$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\.clang-format$
+^\.lintr$

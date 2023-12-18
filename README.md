@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# fipio <a href="https://github.com/UFOKN/fipio"><img src="man/figures/logo.png" align="right" width="25%"/></a>
+# fipio <a href="https://github.com/program--/fipio"><img src="man/figures/logo.png" align="right" width="25%"/></a>
 
 <!-- badges: start -->
 
@@ -9,8 +9,8 @@
 status](https://www.r-pkg.org/badges/version/fipio)](https://CRAN.R-project.org/package=fipio)
 [![CRAN
 downloads](https://cranlogs.r-pkg.org/badges/fipio)](https://CRAN.R-project.org/package=fipio)
-[![codecov](https://codecov.io/gh/UFOKN/fipio/branch/master/graph/badge.svg)](https://app.codecov.io/gh/UFOKN/fipio)
-[![R-CMD-check](https://github.com/UFOKN/fipio/workflows/R-CMD-check/badge.svg)](https://github.com/UFOKN/fipio/actions)
+[![codecov](https://codecov.io/gh/program--/fipio/branch/master/graph/badge.svg)](https://app.codecov.io/gh/program--/fipio)
+[![R-CMD-check](https://github.com/program--/fipio/workflows/R-CMD-check/badge.svg)](https://github.com/program--/fipio/actions)
 [![MIT
 License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 <!-- badges: end -->
@@ -31,10 +31,10 @@ or the development version with `pak` or `remotes`:
 
 ``` r
 # Using `pak`
-pak::pkg_install("UFOKN/fipio")
+pak::pkg_install("program--/fipio")
 
 # Using `remotes`
-remotes::install_github("UFOKN/fipio")
+remotes::install_github("program--/fipio")
 ```
 
 ## Usage
@@ -179,8 +179,10 @@ fipio::coords_to_fips(
 
 # With an `sfg` object
 fipio::coords_to_fips(
-    x   = sf::st_point(c(-81.4980534549709,
-                         36.4314781444978)),
+    x = sf::st_point(c(
+        -81.4980534549709,
+        36.4314781444978
+    )),
     dim = "XY"
 )
 #> [1] "37009"
@@ -188,8 +190,10 @@ fipio::coords_to_fips(
 # With an `sf` object
 fipio::coords_to_fips(
     x = sf::st_as_sf(
-        data.frame(X = c(-81.4980534549709, -81.1249425046948),
-                   Y = c(36.4314781444978, 36.4911893240597)),
+        data.frame(
+            X = c(-81.4980534549709, -81.1249425046948),
+            Y = c(36.4314781444978, 36.4911893240597)
+        ),
         coords = c("X", "Y"),
         crs = 4326
     )

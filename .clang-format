@@ -1,0 +1,44 @@
+---
+Language: Cpp
+BasedOnStyle: Mozilla
+UseTab: Never
+IndentWidth: 4
+ColumnLimit: 80
+DerivePointerAlignment: false
+PointerAlignment: Left
+AlignAfterOpenBracket: BlockIndent
+AlignConsecutiveMacros: AcrossEmptyLines
+AlignConsecutiveAssignments: AcrossEmptyLines
+AlignConsecutiveBitFields: AcrossEmptyLines
+AlignConsecutiveDeclarations: AcrossEmptyLines
+AlignEscapedNewlines: Left
+AlignTrailingComments: true
+AlwaysBreakTemplateDeclarations: Yes
+AlwaysBreakAfterDefinitionReturnType: None
+AlwaysBreakAfterReturnType: None
+SortUsingDeclarations: true
+SortIncludes: Never
+FixNamespaceComments: true
+BraceWrapping:
+  AfterExternBlock: false
+  AfterClass: true
+  AfterControlStatement: Never
+  AfterEnum: true
+  AfterNamespace: false
+  AfterFunction: true
+  AfterStruct: true
+  AfterUnion: true
+  AfterObjCDeclaration: true
+  BeforeCatch: false
+  BeforeElse: false
+  BeforeWhile: false
+  BeforeLambdaBody: false
+  IndentBraces: false
+  AfterCaseLabel: false
+  SplitEmptyFunction: false
+  SplitEmptyNamespace: false
+  SplitEmptyRecord: false
+
+BreakBeforeBraces: Custom
+IndentExternBlock: NoIndent
+---

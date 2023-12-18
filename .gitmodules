@@ -1,0 +1,3 @@
+[submodule "inst/include/fipio/vendor/tg"]
+	path = src/tg
+	url = https://github.com/tidwall/tg.git
