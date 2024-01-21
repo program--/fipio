@@ -105,6 +105,7 @@ testthat::test_that("as_fips edge cases", {
 # Coverage for match(), .has_fastmatch(), .onLoad()
 testthat::test_that("`fmatch` is assigned to `match` if it is installed", {
     testthat::skip_if(!requireNamespace("mockery", quietly = TRUE))
+    testthat::skip_if(!requireNamespace("fastmatch", quietly = TRUE))
     m <- mockery::mock(FALSE, TRUE)
     mockery::stub(expect_match_assignment, ".has_fastmatch", m)
 

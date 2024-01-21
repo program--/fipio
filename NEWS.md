@@ -1,11 +1,14 @@
 # fipio 1.1.1.9000
 
+- Fixed `coords_to_fips()` throwing `order` error due to `ret_index` being a list ([#15](https://github.com/program--/fipio/issues/15))
+- Return documentation back to linking to https://github.com/program-- instead of UFOKN's GitHub org.
+
 # fipio 1.1.1
 
 - Added [Mike Johnson](https://github.com/mikejohnson51) to `DESCRIPTION`.
-- Fixed `coords_to_fips()` throwing error in some edge cases ([#11](https://github.com/UFOKN/fipio/issues/11)).
-- Fixed `as_fips()` throwing error for unknown states. ([#10](https://github.com/UFOKN/fipio/issues/10)).
-- Fixed `as_fips()` edge case throwing error ([#13](https://github.com/UFOKN/fipio/pull/13)).
+- Fixed `coords_to_fips()` throwing error in some edge cases ([#11](https://github.com/program--/fipio/issues/11)).
+- Fixed `as_fips()` throwing error for unknown states. ([#10](https://github.com/program--/fipio/issues/10)).
+- Fixed `as_fips()` edge case throwing error ([#13](https://github.com/program--/fipio/pull/13)).
 
 # fipio 1.1.0
 
