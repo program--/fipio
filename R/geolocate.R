@@ -74,6 +74,8 @@ coords_to_fips.numeric <- function(x, y, ...) {
     lookup_geometry <- .geometry_fips[county_fips]
     rm(county_fips)
 
+    # Filter out geometries by bounding box,
+    # like a spatial index
     intersected <- which(sapply(
         lookup_geometry,
         FUN = function(g) {
@@ -84,15 +86,15 @@ coords_to_fips.numeric <- function(x, y, ...) {
         USE.NAMES = FALSE
     ))
 
+    # Get fips and geometry based on `intersected`
     lookup_fips     <- lookup_fips[intersected]
     lookup_geometry <- lookup_geometry[intersected]
 
-    ret_index <- sapply(
+    ret_index <- lapply(
         lookup_geometry,
         FUN = .intersects,
         x = x,
-        y = y,
-        USE.NAMES = FALSE
+        y = y
     )
 
     ret_value <- .pad0(lookup_fips)[!is.na(ret_index)]
@@ -100,5 +102,10 @@ coords_to_fips.numeric <- function(x, y, ...) {
 
     rm(lookup_fips, lookup_geometry)
 
-    ret_value[order(ret_index)]
+    result <- character(length(x))
+    for (ind in seq_along(ret_value)) {
+        result[ret_index[[ind]]] <- ret_value[ind]
+    }
+
+    result
 }
