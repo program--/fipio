@@ -1,6 +1,6 @@
 Package: fipio
 Title: Lightweight Federal Information Processing System (FIPS) Code Information Retrieval
-Version: 1.1.1.9000
+Version: 1.1.2
 Authors@R: 
     c(person(given = "Justin",
              family = "Singh-Mohudpur",
@@ -17,8 +17,8 @@ Authors@R:
 Description: Provides a lightweight suite
              of functions for retrieving information
              about 5-digit or 2-digit US FIPS codes.
-URL: https://fipio.justinsingh.me, https://github.com/UFOKN/fipio
-BugReports: https://github.com/UFOKN/fipio/issues
+URL: https://fipio.justinsingh.me, https://github.com/program--/fipio
+BugReports: https://github.com/program--/fipio/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

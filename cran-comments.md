@@ -4,7 +4,7 @@ This is a resubmission. This version addresses bugfixes. See the NEWS.md file fo
 
 ## Test environments
 
-* GitHub Actions (ubuntu-18.04): devel, release, oldrel, 3.6, 3.5
+* GitHub Actions (ubuntu-latest): devel, release, oldrel, 3.6, 3.5
 * GitHub Actions (windows): release, 3.6
 * GitHub Actions (macOS): release
 * win-builder: devel
